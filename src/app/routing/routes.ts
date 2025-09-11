@@ -1,0 +1,17 @@
+export const RoutePath = {
+  BASE: '/',
+  ACCOUNT: '/account',
+  CREATE_POST: '/create-post',
+  CREATE_QUESTION: '/create-question',
+  EDIT_POST: '/edit-post',
+  EDIT_QUESTION: '/edit-question',
+  HOME: '/home',
+  LOGIN: '/login',
+  MY_POSTS: '/my-posts',
+  POST: '/post',
+  QUESTIONS_LIST: '/questions-list',
+  REGISTER: '/register',
+  USER: '/user',
+  USERS_LIST: '/users-list',
+  NOT_FOUND: '*',
+} as const;
