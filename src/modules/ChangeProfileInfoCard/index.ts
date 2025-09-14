@@ -1,0 +1,1 @@
+export { ChangeProfileInfoCard } from './ChangeProfileInfoCard';

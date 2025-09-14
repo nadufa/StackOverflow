@@ -8,7 +8,6 @@ export const RoutePath = {
   HOME: '/home',
   LOGIN: '/login',
   MY_POSTS: '/my-posts',
-  POST: '/post',
   QUESTIONS_LIST: '/questions-list',
   REGISTER: '/register',
   USER: '/user',

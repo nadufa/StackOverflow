@@ -9,10 +9,10 @@ import {
   Home,
   Login,
   MyPosts,
-  Post,
   QuestionsList,
+  Register,
   User,
-  UsersList,
+  Users,
 } from '../../../../pages';
 import { RootLayout } from '../../../layouts';
 import { RoutePath } from '../../../routing';
@@ -21,16 +21,16 @@ import { ProtectedRoute } from './ProtectedRoute';
 export const router = createBrowserRouter([
   {
     errorElement: <Error />,
+    element: <RootLayout />,
     children: [
-      {
-        element: <RootLayout />,
-        children: [{ path: RoutePath.BASE, element: <Home /> }],
-      },
+      { path: RoutePath.BASE, element: <Home /> },
+      { path: RoutePath.LOGIN, element: <Login /> },
+      { path: RoutePath.REGISTER, element: <Register /> },
+      { path: RoutePath.NOT_FOUND, element: <Error /> },
       {
         element: <ProtectedRoute />,
         children: [
           {
-            element: <RootLayout />,
             children: [
               { path: RoutePath.ACCOUNT, element: <Account /> },
               { path: RoutePath.CREATE_POST, element: <CreatePost /> },
@@ -38,16 +38,13 @@ export const router = createBrowserRouter([
               { path: RoutePath.EDIT_POST, element: <EditPost /> },
               { path: RoutePath.EDIT_QUESTION, element: <EditQuestion /> },
               { path: RoutePath.MY_POSTS, element: <MyPosts /> },
-              { path: RoutePath.POST, element: <Post /> },
               { path: RoutePath.QUESTIONS_LIST, element: <QuestionsList /> },
               { path: RoutePath.USER, element: <User /> },
-              { path: RoutePath.USERS_LIST, element: <UsersList /> },
+              { path: RoutePath.USERS_LIST, element: <Users /> },
             ],
           },
         ],
       },
-      { path: RoutePath.LOGIN, element: <Login /> },
-      { path: RoutePath.NOT_FOUND, element: <Error /> },
     ],
   },
 ]);
