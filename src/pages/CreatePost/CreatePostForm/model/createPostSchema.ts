@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const createPostSchema = z.object({
-  snippetLangiage: z
+  snippetLanguage: z
     .string()
     .trim()
     .min(1, 'Field cannot be empty')

@@ -24,18 +24,20 @@ export const ChangeUsernameForm = () => {
     <div className='flex flex-col gap-2 w-sm'>
       <h3 className='text-gray-700 font-medium'>Change your username:</h3>
       <form onSubmit={handleSubmit(submit)} className='flex flex-col gap-3 mx-auto'>
-        <div className='flex flex-col gap-0.5'>
+        <div className='relative flex flex-col gap-0.5'>
           <Controller
             name='newUsername'
             control={control}
             render={({ field }) => <Input placeholder='New username' {...field} />}
           />
           {errors.newUsername && (
-            <span className='text-red-500 text-xs'>{errors.newUsername.message}</span>
+            <span className='absolute text-red-500 top-full text-xs'>
+              {errors.newUsername.message}
+            </span>
           )}
         </div>
 
-        <Button type='primary' htmlType='submit' className='!mt-3 !bg-[green]'>
+        <Button type='primary' htmlType='submit' className='!mt-2 !bg-[green]'>
           Change username
         </Button>
       </form>

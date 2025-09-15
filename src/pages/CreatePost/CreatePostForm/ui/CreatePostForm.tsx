@@ -10,8 +10,9 @@ export const CreatePostForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<CreatePostFormType>({
-    defaultValues: { snippetLangiage: 'JavaScript', snippetCode: '' },
+    defaultValues: { snippetLanguage: 'JavaScript', snippetCode: '' },
     resolver: zodResolver(createPostSchema),
     mode: 'onSubmit',
   });
@@ -22,26 +23,28 @@ export const CreatePostForm = () => {
   };
 
   const selectOptions = [
-    { value: 'JavaScript', label: 'JavaScript' },
-    { value: 'Python', label: 'Python' },
-    { value: 'Go', label: 'Go' },
-    { value: 'C++', label: 'C++' },
-    { value: 'C#', label: 'C#' },
-    { value: 'Ruby', label: 'Ruby' },
-    { value: 'Rust', label: 'Rust' },
-    { value: 'Java', label: 'Java' },
-    { value: 'Kotlin', label: 'Kotlin' },
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'python', label: 'Python' },
+    { value: 'go', label: 'Go' },
+    { value: 'c++', label: 'C++' },
+    { value: 'c#', label: 'C#' },
+    { value: 'ruby', label: 'Ruby' },
+    { value: 'rust', label: 'Rust' },
+    { value: 'java', label: 'Java' },
+    { value: 'html', label: 'HTML' },
   ];
+
+  const snippetLanguage = watch('snippetLanguage');
 
   return (
     <form onSubmit={handleSubmit(submit)} className='flex flex-col gap-4 mx-auto w-full h-full'>
       <div className='flex flex-col gap-1'>
-        <label htmlFor='snippetLangiage' className='text-gray-700 font-medium'>
+        <label htmlFor='snippetLanguage' className='text-gray-700 font-medium'>
           Language of your snippet:
         </label>
         <Controller
           control={control}
-          name='snippetLangiage'
+          name='snippetLanguage'
           render={({ field }) => <Select size='large' options={selectOptions} {...field} />}
         />
       </div>
@@ -50,18 +53,24 @@ export const CreatePostForm = () => {
         <label htmlFor='snippetCode' className='text-gray-700 font-medium'>
           Code of your snippet:
         </label>
-        <div className='flex-1 min-h-0'>
+        <div className='relative flex-1 min-h-0 rounded-lg border border-gray-300 overflow-hidden'>
           <Controller
             control={control}
             name='snippetCode'
             render={({ field }) => (
               <Editor
                 defaultLanguage='javascript'
-                defaultValue='// some comment'
+                language={snippetLanguage}
+                defaultValue=''
                 height='100%'
                 options={{
                   automaticLayout: true,
                   minimap: { enabled: false },
+                  scrollBeyondLastLine: false,
+                  padding: {
+                    top: 5,
+                    bottom: 5,
+                  },
                 }}
                 {...field}
               />
@@ -69,7 +78,9 @@ export const CreatePostForm = () => {
           />
         </div>
         {errors.snippetCode && (
-          <span className='text-red-500 text-sm'>{errors.snippetCode.message}</span>
+          <span className='absolute text-red-500 top-full text-sm'>
+            {errors.snippetCode.message}
+          </span>
         )}
       </div>
 
