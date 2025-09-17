@@ -26,8 +26,8 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)} className='flex flex-col gap-4 mx-auto w-full max-w-md'>
-      <div className='flex flex-col gap-1'>
+    <form onSubmit={handleSubmit(submit)} className='flex flex-col gap-5 mx-auto w-full max-w-md'>
+      <div className='relative flex flex-col gap-1'>
         <label htmlFor='username' className='text-gray-700 font-medium'>
           Username
         </label>
@@ -36,10 +36,12 @@ export const RegisterForm = () => {
           control={control}
           render={({ field }) => <Input size='large' id='username' {...field} />}
         />
-        {errors.username && <span className='text-red-500 text-sm'>{errors.username.message}</span>}
+        {errors.username && (
+          <span className='absolute text-red-500 top-full text-sm'>{errors.username.message}</span>
+        )}
       </div>
 
-      <div className='flex flex-col gap-1'>
+      <div className='relative flex flex-col gap-1'>
         <label htmlFor='password' className='text-gray-700 font-medium'>
           Password
         </label>
@@ -48,10 +50,12 @@ export const RegisterForm = () => {
           control={control}
           render={({ field }) => <Input.Password size='large' id='password' {...field} />}
         />
-        {errors.password && <span className='text-red-500 text-sm'>{errors.password.message}</span>}
+        {errors.password && (
+          <span className='absolute text-red-500 top-full text-sm'>{errors.password.message}</span>
+        )}
       </div>
 
-      <div className='flex flex-col gap-1'>
+      <div className='relative flex flex-col gap-1'>
         <label htmlFor='confirmPassword' className='text-gray-700 font-medium'>
           Confirm password
         </label>
@@ -61,7 +65,9 @@ export const RegisterForm = () => {
           render={({ field }) => <Input.Password size='large' id='confirmPassword' {...field} />}
         />
         {errors.confirmPassword && (
-          <span className='text-red-500 text-sm'>{errors.confirmPassword.message}</span>
+          <span className='absolute text-red-500 top-full text-sm'>
+            {errors.confirmPassword.message}
+          </span>
         )}
       </div>
 

@@ -1,7 +1,10 @@
+import { QuestionForm } from '../../modules/QuestionForm';
+
 export const CreateQuestion = () => {
   return (
-    <div>
-      <h1>CreateQuestionPage</h1>
-    </div>
+    <>
+      <h1 className='text-3xl font-bold text-gray-800 !mb-10'>Create new question</h1>
+      <QuestionForm mode='create' />
+    </>
   );
 };

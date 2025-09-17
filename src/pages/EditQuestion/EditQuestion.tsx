@@ -1,7 +1,10 @@
+import { QuestionForm } from '../../modules/QuestionForm';
+
 export const EditQuestion = () => {
   return (
-    <div>
-      <h1>EditQuestionPage</h1>
-    </div>
+    <>
+      <h1 className='text-3xl font-bold text-gray-800 !mb-10'>Edit question</h1>
+      <QuestionForm mode='edit' />
+    </>
   );
 };
