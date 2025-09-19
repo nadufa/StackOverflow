@@ -2,9 +2,12 @@ import { CommentOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import Editor from '@monaco-editor/react';
 import type * as monaco from 'monaco-editor';
 import { useRef, useState } from 'react';
-import { LanguageIcon, PersonIcon } from '../../../assets/svg';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../../../app/routing';
+import { BracketsIcon, PersonIcon } from '../../../assets/svg';
 
 export const PostItem = () => {
+  const navigate = useNavigate();
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const [height, setHeight] = useState(100);
 
@@ -26,14 +29,14 @@ export const PostItem = () => {
 console.log('Hello, world!');`;
 
   return (
-    <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden'>
+    <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden w-full'>
       <div className='flex flex-row !pl-2 !pr-2 place-content-between items-center h-7 w-full'>
         <div className='flex flex-row gap-1 items-center cursor-pointer'>
           <PersonIcon width={20} height={20} />
           <span>Dearest Nadufa</span>
         </div>
         <div className='flex flex-row gap-1 items-center'>
-          <LanguageIcon width={20} height={20} />
+          <BracketsIcon width={20} height={20} />
           <span>Javascript</span>
         </div>
       </div>
@@ -66,7 +69,10 @@ console.log('Hello, world!');`;
             <DislikeFilled style={{ color: 'red', cursor: 'pointer' }} />
           </div>
         </div>
-        <div className='flex flex-row gap-1 items-center'>
+        <div
+          className='flex flex-row gap-1 items-center'
+          onClick={() => navigate(RoutePath.POST_COMMENTS)}
+        >
           <span className='text-xs'>1</span>
           <CommentOutlined style={{ cursor: 'pointer' }} />
         </div>
