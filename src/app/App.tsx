@@ -1,9 +1,11 @@
-import { AppRouterProvider, ThemeProvider } from './providers';
+import { AppRouterProvider, QueryProvider, ThemeProvider } from './providers';
 
 function App() {
   return (
     <ThemeProvider>
-      <AppRouterProvider />
+      <QueryProvider>
+        <AppRouterProvider />
+      </QueryProvider>
     </ThemeProvider>
   );
 }

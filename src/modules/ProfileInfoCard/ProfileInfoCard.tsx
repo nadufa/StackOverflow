@@ -17,7 +17,7 @@ export const ProfileInfoCard = () => {
         className='h-full max-h-40 w-auto rounded-full object-cover self-center'
       />
       <div className='flex flex-col gap-2'>
-        <UserDescription />
+        <UserDescription id={1} role={'Role'} username={'ProfileInfo'} />
 
         {isProfileOwner && <ProfileToolsPanel />}
       </div>
