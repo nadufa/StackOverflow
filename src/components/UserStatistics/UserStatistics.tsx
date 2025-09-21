@@ -1,26 +1,10 @@
-interface IUserStatistics {
-  snippetsCount: number;
-  rating: number;
-  commentsCount: number;
-  likesCount: number;
-  dislikesCount: number;
-  questionsCount: number;
-  correctAnswersCount: number;
-  regularAnswersCount: number;
+import { type IStatistic } from '../../modules/ProfileInfoCard/model';
+
+interface IUserStatisticData {
+  data?: IStatistic;
 }
 
-const mockData: IUserStatistics = {
-  snippetsCount: 5,
-  rating: 150,
-  commentsCount: 10,
-  likesCount: 20,
-  dislikesCount: 5,
-  questionsCount: 8,
-  correctAnswersCount: 12,
-  regularAnswersCount: 15,
-};
-
-const displayNames: Record<keyof IUserStatistics, string> = {
+const displayNames: Record<keyof IStatistic, string> = {
   snippetsCount: 'Snippets',
   rating: 'Rating',
   commentsCount: 'Comments',
@@ -31,12 +15,18 @@ const displayNames: Record<keyof IUserStatistics, string> = {
   regularAnswersCount: 'Regular answers',
 };
 
-export const UserStatistics = () => {
-  const data = Object.entries(mockData) as Array<[keyof IUserStatistics, number]>;
+export const UserStatistics = ({ data }: IUserStatisticData) => {
+  console.log(data);
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  const entries = Object.entries(data) as Array<[keyof IStatistic, number]>;
+  console.log(entries);
   return (
     <div className='flex flex-col tiny-gap'>
-      {data.map(([key, value]) => (
+      {entries.map(([key, value]) => (
         <p key={key} className='text-sm font-semibold'>
           {displayNames[key]}: <span className='text-sm font-semibold text-gray-500'>{value}</span>
         </p>

@@ -38,10 +38,18 @@ export const Headerbar = () => {
       </div>
 
       <div className='flex flex-row items-center'>
-        <Button className='!mr-2' onClick={() => navigate(RoutePath.CREATE_QUESTION)}>
+        <Button
+          className='!mr-2 hover:!text-(color:--primary-color)'
+          onClick={() => navigate(RoutePath.CREATE_QUESTION)}
+        >
           Ask question
         </Button>
-        <Button onClick={() => navigate(RoutePath.LOGIN)}>Sign out</Button>
+        <Button
+          className='hover:!text-(color:--primary-color)'
+          onClick={() => navigate(RoutePath.LOGIN)}
+        >
+          Sign out
+        </Button>
 
         <div className='relative !ml-4' ref={dropdownRef}>
           <button

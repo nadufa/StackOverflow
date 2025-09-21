@@ -55,12 +55,7 @@ export const LoginForm = () => {
         )}
       </div>
 
-      <Button
-        size='large'
-        type='primary'
-        htmlType='submit'
-        className='!mt-3 !bg-(color:--primary-color)'
-      >
+      <Button size='large' type='primary' htmlType='submit' className='!mt-3'>
         Submit
       </Button>
 

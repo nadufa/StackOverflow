@@ -1,4 +1,6 @@
 import { Button } from 'antd';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { RoutePath } from '../../../../app/routing';
 import { UserDescription } from '../../../../components/UserDescription';
 
 const photo =
@@ -11,6 +13,8 @@ interface IUserItem {
 }
 
 export const UserItem = ({ id, role, username }: IUserItem) => {
+  const navigate = useNavigate();
+
   return (
     <div className='flex justify-around !py-6 border-2 border-gray-200 rounded-lg bg-white w-2xl'>
       <img
@@ -21,7 +25,12 @@ export const UserItem = ({ id, role, username }: IUserItem) => {
       <div className='flex flex-col gap-2'>
         <UserDescription id={id} role={role} username={username} />
 
-        <Button>Go to user page</Button>
+        <Button
+          className='w-30'
+          onClick={() => navigate(generatePath(RoutePath.USER, { userId: id.toString() }))}
+        >
+          Go to user page
+        </Button>
       </div>
     </div>
   );

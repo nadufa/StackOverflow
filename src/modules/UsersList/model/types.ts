@@ -1,3 +1,6 @@
+import type { RadioChangeEvent } from 'antd';
+import type { ChangeEvent } from 'react';
+
 interface IUser {
   id: number;
   username: string;
@@ -28,4 +31,20 @@ export interface IUsersSelect {
 }
 export interface IUsersResponse {
   data: IUsersSelect;
+}
+
+export type SortByValueType = 'id' | 'username' | 'role';
+export type SortDirectionValueType = 'asc' | 'desc';
+
+export interface ISearchState {
+  inputText: string;
+  sortByValue: SortByValueType;
+  sortDirectionValue: SortDirectionValueType;
+}
+
+export interface IUsersSettings {
+  searchState: ISearchState;
+  setSearchInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  setSortByValue: (e: RadioChangeEvent) => void;
+  setSortDirectionValue: (e: RadioChangeEvent) => void;
 }

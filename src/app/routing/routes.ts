@@ -11,7 +11,7 @@ export const RoutePath = {
   POST_COMMENTS: '/post-comments',
   QUESTIONS_LIST: '/questions-list',
   REGISTER: '/register',
-  USER: '/user',
+  USER: '/user/:userId',
   USERS_LIST: '/users-list',
   NOT_FOUND: '*',
 } as const;

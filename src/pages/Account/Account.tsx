@@ -10,7 +10,7 @@ export const Account = () => {
         Welcome, <span>{name}</span>!
       </h1>
 
-      <ProfileInfoCard />
+      <ProfileInfoCard isProfileOwner />
       <ChangeProfileInfoCard />
     </div>
   );

@@ -1,7 +1,9 @@
+import { ProfileInfoCard } from '../../modules/ProfileInfoCard';
+
 export const User = () => {
   return (
-    <div>
-      <h1>UserPage</h1>
-    </div>
+    <>
+      <ProfileInfoCard />
+    </>
   );
 };
