@@ -3,7 +3,7 @@ import { useUsersSettingsStore } from '../../model/usersStore';
 
 const { Search } = Input;
 
-export const SearchBar = () => {
+export const UsersSearchBar = () => {
   const { searchState, setSearchInput, setSortByValue, setSortDirectionValue } =
     useUsersSettingsStore();
 
