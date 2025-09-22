@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
+import { UserIcon } from '../../assets/image';
 import { UserDescription } from '../../components/UserDescription';
 import { UserStatistics } from '../../components/UserStatistics';
 import { useGetUserStatistic } from './api';
 import { ProfileToolsPanel } from './ProfileToolsPanel';
 import { type IProfileInfo } from './types';
-
-const photo =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhil-XGkzgggj02Aboq95WjS5HK0aDt5bIU2tVPnSXpasdlxW0erT4JOxG6mUAeMdO9hg&usqp=CAU';
 
 const mockUserData = {
   statistics: {
@@ -34,7 +32,7 @@ export const ProfileInfoCard = ({ isProfileOwner = false }: IProfileInfo) => {
     <div className='flex justify-around !py-6 border-2 border-gray-200 rounded-lg bg-white w-4xl'>
       <UserStatistics data={data?.statistic || mockUserData.statistics} />
       <img
-        src={photo}
+        src={UserIcon}
         alt='Avatar'
         className='h-full max-h-40 w-auto rounded-full object-cover self-center'
       />

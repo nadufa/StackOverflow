@@ -1,12 +1,11 @@
 import { DislikeFilled, LikeFilled } from '@ant-design/icons';
-import { PersonIcon } from '../../../assets/svg';
+import { Author } from '../../../components/Author';
 
 export const CommentItem = () => {
   return (
     <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden w-full'>
       <div className='flex flex-row gap-1 !pl-2 !pr-2 !py-1 items-center cursor-pointer w-fit'>
-        <PersonIcon width={20} height={20} />
-        <span>Dearest Nadufa</span>
+        <Author name='Nadufa' />
       </div>
       <span className='border-t-2 border-b-2 border-gray-200 !pl-3 !py-1'>Hello</span>
       <div className='flex flex-row !pl-4 gap-3 items-center'>

@@ -4,7 +4,8 @@ import type * as monaco from 'monaco-editor';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutePath } from '../../../app/routing';
-import { BracketsIcon, PersonIcon } from '../../../assets/svg';
+import { BracketsIcon } from '../../../assets/svg';
+import { Author } from '../../../components/Author';
 
 export const PostItem = () => {
   const navigate = useNavigate();
@@ -31,9 +32,8 @@ console.log('Hello, world!');`;
   return (
     <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden w-full'>
       <div className='flex flex-row !pl-2 !pr-2 place-content-between items-center h-7 w-full'>
-        <div className='flex flex-row gap-1 items-center cursor-pointer'>
-          <PersonIcon width={20} height={20} />
-          <span>Dearest Nadufa</span>
+        <div className='flex flex-row gap-1 items-center cursor-pointer w-fit'>
+          <Author name='Nadufa' />
         </div>
         <div className='flex flex-row gap-1 items-center'>
           <BracketsIcon width={20} height={20} />
