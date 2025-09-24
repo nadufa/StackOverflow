@@ -1,23 +1,49 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { fetchAddAnswer } from '../../../api';
+import { type AddAnswerFormType, addAnswerSchema } from '../../../model';
 import { AnswerItem } from './AnswerItem';
 
 export const QuestionAnswersBlock = ({
+  id,
   answers,
 }: {
+  id: number;
   answers: {
     id: string;
     content: string;
     isCorrect: boolean;
   }[];
 }) => {
-  const [isAnswersOpen, setIsAnswersOpen] = useState(false);
-  const [newAnswer, setNewAnswer] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: {},
+    reset,
+  } = useForm<AddAnswerFormType>({
+    defaultValues: { content: '' },
+    resolver: zodResolver(addAnswerSchema),
+    mode: 'onSubmit',
+  });
 
-  const handleAddAnswer = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('New answer:', newAnswer);
-    setNewAnswer('');
+  const [isAnswersOpen, setIsAnswersOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: fetchAddAnswer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['answers'] });
+    },
+  });
+
+  const submit = (formData: AddAnswerFormType) => {
+    console.log('CreateCommentForm ', formData);
+    if (!id) return;
+    mutate({ ...formData, questionId: id, content: formData.content });
+    reset();
   };
 
   return (
@@ -45,14 +71,15 @@ export const QuestionAnswersBlock = ({
             ) : null;
           })}
 
-          <form onSubmit={handleAddAnswer} className='flex gap-2 !my-2'>
-            <Input
-              type='text'
-              value={newAnswer}
-              onChange={(e) => setNewAnswer(e.target.value)}
-              placeholder='Your answer...'
+          <form onSubmit={handleSubmit(submit)} className='flex gap-2 !my-2'>
+            <Controller
+              control={control}
+              name='content'
+              render={({ field }) => <Input type='text' placeholder='Your answer...' {...field} />}
             />
-            <Button type='primary'>Add</Button>
+            <Button htmlType='submit' type='primary'>
+              Add
+            </Button>
           </form>
         </div>
       )}

@@ -1,10 +1,15 @@
-import { useParams } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { UserIcon } from '../../assets/image';
 import { UserDescription } from '../../components/UserDescription';
 import { UserStatistics } from '../../components/UserStatistics';
 import { useGetUserStatistic } from './api';
 import { ProfileToolsPanel } from './ProfileToolsPanel';
 import { type IProfileInfo } from './types';
+
+type ProtectedContext = {
+  authUserId: string;
+  authUserUsername: string;
+};
 
 const mockUserData = {
   statistics: {
@@ -26,7 +31,8 @@ const mockUserData = {
 
 export const ProfileInfoCard = ({ isProfileOwner = false }: IProfileInfo) => {
   const { userId } = useParams<{ userId: string }>();
-  const { data, isLoading } = useGetUserStatistic(userId || '');
+  const { authUserId } = useOutletContext<ProtectedContext>();
+  const { data } = useGetUserStatistic(userId || authUserId);
 
   return (
     <div className='flex justify-around !py-6 border-2 border-gray-200 rounded-lg bg-white w-4xl'>

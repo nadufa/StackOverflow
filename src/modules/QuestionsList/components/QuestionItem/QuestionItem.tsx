@@ -17,7 +17,7 @@ export const QuestionItem = ({
       <QuestionInfo id={id} title={title} username={user.username} isResolved={isResolved} />
       <h3 className='text-sm text-gray-600'>{description}</h3>
       {attachedCode && <QuestionCode attachedCode={attachedCode} />}
-      <QuestionAnswersBlock answers={answers} />
+      <QuestionAnswersBlock id={+id} answers={answers} />
     </div>
   );
 };

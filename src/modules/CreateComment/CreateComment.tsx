@@ -1,55 +1,116 @@
 import { SmileFilled } from '@ant-design/icons';
-import { Input } from 'antd';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button, Input } from 'antd';
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { SendIcon } from '../../assets/svg';
 import { CommentsList } from '../CommentsList';
-import { PostItem } from '../PostsList/PostItem';
+import { PostItem } from '../PostsList/components/PostItem';
+import { fetchCreateComment, useGetPost } from './api';
+import { createCommentSchema } from './model';
+import { type CreateCommentFormType } from './model/types';
 
 const { TextArea } = Input;
 
 export const CreateComment = () => {
-  const [showPicker, setShowPicker] = useState(false);
-  const [commentMessage, setCommentMessage] = useState<string | null>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CreateCommentFormType>({
+    defaultValues: { content: '' },
+    resolver: zodResolver(createCommentSchema),
+    mode: 'onSubmit',
+  });
 
-  const handleEmojiClick = (emojiData: EmojiClickData) => {
-    setCommentMessage((message) => (message += emojiData.emoji));
+  const { postId } = useParams<{ postId: string }>();
+  const { data } = useGetPost(postId || '');
+  const [showPicker, setShowPicker] = useState(false);
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: fetchCreateComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    },
+  });
+
+  const handleEmojiClick = (
+    emojiData: EmojiClickData,
+    onChange: (val: string) => void,
+    value: string
+  ) => {
+    onChange(value + emojiData.emoji);
     setShowPicker(false);
   };
 
-  const handleMessageTyping = (value: string) => {
-    setCommentMessage(value);
+  const submit = (formData: CreateCommentFormType) => {
+    console.log('CreateCommentForm ', formData);
+    if (!data?.id) return;
+    mutate({ ...formData, snippetId: data?.id ? +data.id : 0 });
+    reset();
   };
 
   return (
-    <div className='flex flex-col gap-4 w-full'>
-      <PostItem />
+    <form onSubmit={handleSubmit(submit)} className='flex flex-col gap-4 w-full'>
+      <PostItem
+        key={data?.id}
+        id={data?.id || ''}
+        code={data?.code || ''}
+        language={data?.language || ''}
+        username={data?.user.username || ''}
+        userId={data?.user.id || ''}
+        likesAmount={data?.marks.filter((item) => item.type === 'like').length || 0}
+        dislikesAmount={data?.marks.filter((item) => item.type === 'dislike').length || 0}
+        commentsAmount={data?.comments.length || 0}
+      />
       <div className='flex flex-row gap-2 !mb-3'>
-        <TextArea
-          rows={5}
-          placeholder='Your comment here'
-          value={commentMessage ?? ''}
-          onChange={(e) => handleMessageTyping(e.target.value)}
+        <Controller
+          control={control}
+          name='content'
+          render={({ field }) => (
+            <div className='relative w-full'>
+              <TextArea
+                rows={5}
+                placeholder='Your comment here'
+                value={field.value}
+                onChange={field.onChange}
+              />
+
+              {showPicker && (
+                <div className='absolute right-0 mt-2 z-50'>
+                  <EmojiPicker
+                    onEmojiClick={(emojiData) =>
+                      handleEmojiClick(emojiData, field.onChange, field.value)
+                    }
+                  />
+                </div>
+              )}
+            </div>
+          )}
         />
         <div className='flex flex-col gap-2 !pt-3 !pb-3 justify-between'>
           <button
+            type='button'
             onClick={() => setShowPicker((prev) => !prev)}
             className='px-2 py-1 rounded cursor-pointer'
           >
             <SmileFilled style={{ fontSize: 25 }} />
           </button>
 
-          {showPicker && (
-            <div className='absolute right-0 !mt-7 z-50' style={{ position: 'absolute' }}>
-              <EmojiPicker onEmojiClick={handleEmojiClick} />
-            </div>
-          )}
-          <button className='cursor-pointer'>
+          <Button htmlType='submit' className='cursor-pointer !bg-transparent !border-none'>
             <SendIcon width={30} height={30} />
-          </button>
+          </Button>
         </div>
       </div>
-      <CommentsList />
-    </div>
+      {errors.content && (
+        <span className='absolute text-red-500 top-full text-sm'>{errors.content.message}</span>
+      )}
+      <CommentsList comments={data?.comments ?? []} />
+    </form>
   );
 };

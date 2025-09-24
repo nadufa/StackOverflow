@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Editor from '@monaco-editor/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
-import { questionSchema, type QuestionFormType } from '../model';
+import { fetchCreateQuestion } from '../api';
+import { createQuestionSchema, type QuestionFormType } from '../model';
 import { type QuestionFormPropsType } from '../types';
 
 export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
@@ -13,12 +15,25 @@ export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
     reset,
   } = useForm<QuestionFormType>({
     defaultValues: { title: '', code: '' },
-    resolver: zodResolver(questionSchema),
+    resolver: zodResolver(createQuestionSchema),
     mode: 'onSubmit',
+  });
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: fetchCreateQuestion,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
+    },
   });
 
   const submit = (data: QuestionFormType) => {
     console.log('QuestionForm ', data);
+    mutate({
+      title: data.title,
+      description: data.description,
+      attachedCode: data.code,
+    });
     reset();
   };
 
@@ -51,7 +66,7 @@ export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
       </div>
 
       <div className='flex flex-col gap-1 flex-1 min-h-0'>
-        <label htmlFor='snippetCode' className='text-gray-700 font-medium text-l'>
+        <label htmlFor='code' className='text-gray-700 font-medium text-l'>
           Attached code:
         </label>
         <div className='relative flex-1 min-h-0 rounded-lg border border-gray-300 overflow-hidden'>

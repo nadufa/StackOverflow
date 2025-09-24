@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { RoutePath } from '../../../../app/routing';
+import { login } from '../api';
 import { loginSchema, type LoginFormType } from '../model';
 
 export const LoginForm = () => {
@@ -18,11 +20,19 @@ export const LoginForm = () => {
   });
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+    },
+  });
 
   const submit = (data: LoginFormType) => {
     console.log('LoginForm ', data);
     reset();
     navigate(RoutePath.BASE);
+    mutate(data);
   };
 
   return (

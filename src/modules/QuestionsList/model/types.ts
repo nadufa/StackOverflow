@@ -1,11 +1,18 @@
 import type { RadioChangeEvent } from 'antd';
 import type { ChangeEvent } from 'react';
+import z from 'zod';
+import { addAnswerSchema } from './addAnswerSchema';
 
-export interface IQuestion {
+export type AddAnswerFormType = z.infer<typeof addAnswerSchema>;
+
+interface IQuestionBase {
   id: string;
   title: string;
   description: string;
   attachedCode: string;
+}
+
+export interface IQuestion extends IQuestionBase {
   isResolved: boolean;
   user: {
     id: string;
@@ -57,4 +64,31 @@ export interface IQuestionsSettings {
   setSearchInput: (e: ChangeEvent<HTMLInputElement>) => void;
   setSortByValue: (e: RadioChangeEvent) => void;
   setSortDirectionValue: (e: RadioChangeEvent) => void;
+}
+
+export interface IUser {
+  id: string;
+  username: string;
+  role: string;
+}
+
+export interface IAnswer {
+  id: string;
+  content: string;
+  isCorrect: boolean;
+  question: IQuestionBase;
+  user: IUser;
+}
+
+export interface IAnswerRequest {
+  content: string;
+  questionId: number;
+}
+
+export interface IAnswerData {
+  data: IAnswer;
+}
+
+export interface IAnswerResponse {
+  data: IAnswerData;
 }
