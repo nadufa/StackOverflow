@@ -8,6 +8,7 @@ import {
   Error,
   Home,
   Login,
+  Logout,
   MyPosts,
   PostComments,
   Questions,
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
     children: [
       { path: RoutePath.BASE, element: <Home /> },
       { path: RoutePath.LOGIN, element: <Login /> },
+      { path: RoutePath.LOGOUT, element: <Logout /> },
       { path: RoutePath.REGISTER, element: <Register /> },
       { path: RoutePath.NOT_FOUND, element: <Error /> },
       {

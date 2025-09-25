@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { SendIcon } from '../../assets/svg';
-import { CommentsList } from '../CommentsList';
+import { CommentsList } from '../ChangeProfileInfoCard/CommentsList';
 import { PostItem } from '../PostsList/components/PostItem';
 import { fetchCreateComment, useGetPost } from './api';
 import { createCommentSchema } from './model';

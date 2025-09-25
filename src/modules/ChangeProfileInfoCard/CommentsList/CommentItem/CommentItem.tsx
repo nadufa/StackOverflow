@@ -1,5 +1,5 @@
-import { Author } from '../../../components/Author';
-import type { IUser } from '../../CreateComment/model';
+import { Author } from '../../../../components/Author';
+import type { IUser } from '../../../CreateComment/model';
 
 interface ICommentItemProps {
   id: string;

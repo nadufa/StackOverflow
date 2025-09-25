@@ -15,13 +15,6 @@ export const login = (data: { username: string; password: string }): Promise<ILo
   });
 };
 
-export const logout = () => {
-  return ApiClient.POST<void, undefined>({
-    url: `auth/logout`,
-    data: undefined,
-  });
-};
-
 export const useAuth = () => {
   return useQuery<IAuthResponse, Error, IAuthUserData>({
     queryKey: ['auth'],

@@ -11,7 +11,7 @@ export const QuestionAnswersBlock = ({
   id,
   answers,
 }: {
-  id: number;
+  id: string;
   answers: {
     id: string;
     content: string;
@@ -42,7 +42,7 @@ export const QuestionAnswersBlock = ({
   const submit = (formData: AddAnswerFormType) => {
     console.log('CreateCommentForm ', formData);
     if (!id) return;
-    mutate({ ...formData, questionId: id, content: formData.content });
+    mutate({ ...formData, questionId: Number(id), content: formData.content });
     reset();
   };
 

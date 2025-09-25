@@ -1,2 +1,2 @@
 export { registerSchema } from './registerSchema';
-export type { RegisterFormType } from './types';
+export type { IRegisterData, IRegisterRequest, IRegisterResponse, RegisterFormType } from './types';

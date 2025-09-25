@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
+import { useEditUsername } from '../api';
 import { changeUsernameSchema, type ChangeUsernameFormType } from '../model';
 
 export const ChangeUsernameForm = () => {
@@ -15,8 +16,10 @@ export const ChangeUsernameForm = () => {
     mode: 'onSubmit',
   });
 
+  const { mutate, isPending } = useEditUsername();
+
   const submit = (data: ChangeUsernameFormType) => {
-    console.log('ChangeUsernameForm ', data);
+    mutate({ username: data.newUsername });
     reset();
   };
 
@@ -37,7 +40,7 @@ export const ChangeUsernameForm = () => {
           )}
         </div>
 
-        <Button type='primary' htmlType='submit' className='!mt-2 !bg-[green]'>
+        <Button loading={isPending} type='primary' htmlType='submit' className='!mt-2 !bg-[green]'>
           Change username
         </Button>
       </form>

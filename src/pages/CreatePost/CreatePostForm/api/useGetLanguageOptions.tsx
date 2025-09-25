@@ -1,17 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import { ApiClient } from '../../../../app/api';
-import type { ILanguageOptionsData, ILanguageOptionsResponse } from '../model';
+import type { ILanguageOptionsData } from '../model';
 
-const fetchLanguageOptions = (): Promise<ILanguageOptionsResponse> => {
-  return ApiClient.GET<ILanguageOptionsResponse>({
+const fetchLanguageOptions = (): Promise<ILanguageOptionsData> => {
+  return ApiClient.GET<ILanguageOptionsData>({
     url: `snippets/languages`,
   });
 };
 
 export const useGetLanguageOptions = () => {
-  return useQuery<ILanguageOptionsResponse, Error, ILanguageOptionsData>({
+  return useQuery<ILanguageOptionsData, Error>({
     queryKey: ['snippets'],
     queryFn: () => fetchLanguageOptions(),
-    select: (response) => response.data,
   });
 };

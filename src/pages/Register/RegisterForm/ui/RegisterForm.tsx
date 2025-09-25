@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { RoutePath } from '../../../../app/routing';
+import { register } from '../api';
 import { registerSchema, type RegisterFormType } from '../model';
 
 export const RegisterForm = () => {
@@ -19,8 +21,17 @@ export const RegisterForm = () => {
 
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: register,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['register'] });
+    },
+  });
+
   const submit = (data: RegisterFormType) => {
     console.log('RegisterForm ', data);
+    mutate(data);
     reset();
     navigate(RoutePath.LOGIN);
   };

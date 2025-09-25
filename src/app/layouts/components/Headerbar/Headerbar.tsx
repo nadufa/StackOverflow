@@ -46,7 +46,7 @@ export const Headerbar = () => {
         </Button>
         <Button
           className='hover:!text-(color:--primary-color)'
-          onClick={() => navigate(RoutePath.LOGIN)}
+          onClick={() => navigate(RoutePath.LOGOUT)}
         >
           Sign out
         </Button>

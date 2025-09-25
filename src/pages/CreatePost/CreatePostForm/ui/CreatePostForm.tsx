@@ -10,6 +10,7 @@ import { createPostSchema, type CreatePostFormType } from '../model';
 
 export const CreatePostForm = () => {
   const { data: languageOptions } = useGetLanguageOptions();
+  console.log('OPTIONS', languageOptions);
 
   const {
     control,
@@ -82,7 +83,7 @@ export const CreatePostForm = () => {
             render={({ field }) => (
               <Editor
                 defaultLanguage='javascript'
-                language={language}
+                language={language.toLowerCase()}
                 defaultValue=''
                 height='100%'
                 options={{

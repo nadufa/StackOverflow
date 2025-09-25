@@ -16,8 +16,6 @@ const displayNames: Record<keyof IStatistic, string> = {
 };
 
 export const UserStatistics = ({ data }: IUserStatisticData) => {
-  console.log(data);
-
   if (!data) {
     return <div>Loading...</div>;
   }

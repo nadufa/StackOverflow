@@ -7,6 +7,7 @@ export const RoutePath = {
   EDIT_QUESTION: '/edit-question',
   HOME: '/home',
   LOGIN: '/login',
+  LOGOUT: '/logout',
   MY_POSTS: '/my-posts',
   POST_COMMENTS: '/post/:postId/comments',
   QUESTIONS_LIST: '/questions-list',

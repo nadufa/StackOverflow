@@ -6,6 +6,7 @@ export { EditQuestion } from './EditQuestion';
 export { Error } from './Error';
 export { Home } from './Home';
 export { Login } from './Login';
+export { Logout } from './Logout';
 export { MyPosts } from './MyPosts';
 export { PostComments } from './PostComments';
 export { Questions } from './Questions';
