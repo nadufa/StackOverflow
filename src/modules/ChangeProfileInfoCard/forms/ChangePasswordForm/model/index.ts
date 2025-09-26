@@ -1,2 +1,7 @@
 export { changePasswordSchema } from './changePasswordSchema';
-export type { ChangePasswordFormType } from './types';
+export type {
+  ChangePasswordFormType,
+  IUserPasswordData,
+  IUserPasswordRequest,
+  IUserPasswordResponse,
+} from './types';

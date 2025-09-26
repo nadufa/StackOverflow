@@ -1,1 +1,1 @@
-export { register } from './useRegister';
+export { register, useRegister } from './useRegister';

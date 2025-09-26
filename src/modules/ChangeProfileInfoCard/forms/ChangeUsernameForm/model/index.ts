@@ -1,2 +1,7 @@
 export { changeUsernameSchema } from './changeUsernameSchema';
-export type { ChangeUsernameFormType } from './types';
+export type {
+  ChangeUsernameFormType,
+  IUserUsernameData,
+  IUserUsernameRequest,
+  IUserUsernameResponse,
+} from './types';

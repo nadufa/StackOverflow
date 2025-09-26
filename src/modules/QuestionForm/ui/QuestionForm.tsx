@@ -3,8 +3,10 @@ import Editor from '@monaco-editor/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../../../app/routing';
 import { fetchCreateQuestion } from '../api';
-import { createQuestionSchema, type QuestionFormType } from '../model';
+import { questionSchema, type QuestionFormType } from '../model';
 import { type QuestionFormPropsType } from '../types';
 
 export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
@@ -14,27 +16,32 @@ export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
     formState: { errors },
     reset,
   } = useForm<QuestionFormType>({
-    defaultValues: { title: '', code: '' },
-    resolver: zodResolver(createQuestionSchema),
+    defaultValues: { title: '', description: '', code: '' },
+    resolver: zodResolver(questionSchema),
     mode: 'onSubmit',
   });
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: fetchCreateQuestion,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['questions'] });
-    },
   });
 
   const submit = (data: QuestionFormType) => {
-    console.log('QuestionForm ', data);
-    mutate({
-      title: data.title,
-      description: data.description,
-      attachedCode: data.code,
-    });
-    reset();
+    mutate(
+      {
+        title: data.title,
+        description: data.description,
+        attachedCode: data.code,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['questions'] });
+          reset();
+          navigate(RoutePath.QUESTIONS_LIST);
+        },
+      }
+    );
   };
 
   return (
@@ -97,7 +104,14 @@ export const QuestionForm = ({ mode = 'create' }: QuestionFormPropsType) => {
         )}
       </div>
 
-      <Button size='large' type='primary' htmlType='submit' className='!mt-3'>
+      <Button
+        size='large'
+        type='primary'
+        htmlType='submit'
+        className='!mt-3'
+        disabled={isPending}
+        loading={isPending}
+      >
         {mode === 'create' ? 'Create question' : 'Edit question'}
       </Button>
     </form>

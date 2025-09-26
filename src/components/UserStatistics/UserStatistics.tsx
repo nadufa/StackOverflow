@@ -1,4 +1,4 @@
-import { type IStatistic } from '../../modules/ProfileInfoCard/model';
+import type { IStatistic } from '../../modules/ProfileInfoCard/types';
 
 interface IUserStatisticData {
   data?: IStatistic;
@@ -21,7 +21,6 @@ export const UserStatistics = ({ data }: IUserStatisticData) => {
   }
 
   const entries = Object.entries(data) as Array<[keyof IStatistic, number]>;
-  console.log(entries);
   return (
     <div className='flex flex-col tiny-gap'>
       {entries.map(([key, value]) => (

@@ -1,43 +1,57 @@
-import { Button } from 'antd';
-import { useState } from 'react';
+import { DeleteFilled } from '@ant-design/icons';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Author } from '../../../../../../components/Author';
+import { deleteAnswer } from '../../../../api';
 
 export const AnswerItem = ({
   id,
   content,
   isCorrect,
+  userId,
+  username,
+  authUserId,
+  questionId,
 }: {
   id: string;
   content: string;
   isCorrect: boolean;
+  userId: string;
+  username: string;
+  authUserId: string;
+  questionId: string;
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const MAX_LENGTH = 1000;
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteAnswer,
+  });
 
-  if (content.length <= MAX_LENGTH) {
-    return (
-      <div key={id} className='flex flex-col gap-0.5 !p-2 bg-gray-50 rounded-lg'>
-        {isCorrect && (
-          <p className='!px-1 !py-0.5 text-xs bg-green-100 text-green-800 rounded-full w-fit'>
-            Correct
-          </p>
-        )}
-        <p className='text-sm font-medium'>{content}</p>
-      </div>
-    );
-  }
+  const handleDeleteAnswer = () => {
+    mutate(+id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['getAnswers', +questionId] });
+      },
+    });
+  };
+
   return (
-    <div key={id} className='flex flex-row gap-0.5 !p-2 bg-gray-50 rounded-lg'>
-      {isCorrect && (
-        <p className='!px-1 !py-0.5 text-xs bg-green-100 text-green-800 rounded-full w-fit'>
-          Correct
-        </p>
-      )}
-      {!isExpanded && <p className='text-sm font-medium truncate'>{content}</p>}
-      {isExpanded && <p className='text-sm font-medium'>{content}</p>}
+    <div key={id} className='flex flex-col gap-1 !p-2 bg-gray-50 rounded-lg'>
+      <div className='flex flex-row items-center justify-between'>
+        <div className='flex flex-row items-center gap-0.5'>
+          <Author id={userId} name={username} />
+          {isCorrect && (
+            <p className='!px-1 !py-0.5 text-xs bg-green-100 text-green-800 rounded-full w-fit'>
+              Correct
+            </p>
+          )}
+        </div>
+        {userId === authUserId && (
+          <DeleteFilled className='text-[20px] cursor-pointer' onClick={handleDeleteAnswer} />
+        )}
+      </div>
 
-      <Button size='small' onClick={() => setIsExpanded(!isExpanded)}>
-        {isExpanded ? 'Show less' : 'Show more'}
-      </Button>
+      <p className='text-sm font-medium truncate whitespace-pre-wrap break-words !pr-5'>
+        {content}
+      </p>
     </div>
   );
 };

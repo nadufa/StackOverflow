@@ -11,5 +11,4 @@ export { MyPosts } from './MyPosts';
 export { PostComments } from './PostComments';
 export { Questions } from './Questions';
 export { Register } from './Register';
-export { User } from './User';
 export { Users } from './Users';

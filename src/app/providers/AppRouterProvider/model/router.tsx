@@ -13,7 +13,6 @@ import {
   PostComments,
   Questions,
   Register,
-  User,
   Users,
 } from '../../../../pages';
 import { RootLayout } from '../../../layouts';
@@ -43,7 +42,7 @@ export const router = createBrowserRouter([
               { path: RoutePath.MY_POSTS, element: <MyPosts /> },
               { path: RoutePath.POST_COMMENTS, element: <PostComments /> },
               { path: RoutePath.QUESTIONS_LIST, element: <Questions /> },
-              { path: RoutePath.USER, element: <User /> },
+              { path: RoutePath.USER, element: <Account /> },
               { path: RoutePath.USERS_LIST, element: <Users /> },
             ],
           },

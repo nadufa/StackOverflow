@@ -10,7 +10,6 @@ import { createPostSchema, type CreatePostFormType } from '../model';
 
 export const CreatePostForm = () => {
   const { data: languageOptions } = useGetLanguageOptions();
-  console.log('OPTIONS', languageOptions);
 
   const {
     control,
@@ -26,18 +25,18 @@ export const CreatePostForm = () => {
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending, isError } = useMutation({
     mutationFn: fetchCreatePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['auth'] });
-    },
   });
 
   const submit = (data: CreatePostFormType) => {
-    console.log('CreatePostForm ', data);
-    mutate(data);
-    reset();
-    navigate(RoutePath.MY_POSTS);
+    mutate(data, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['snippets'] });
+        reset();
+        navigate(RoutePath.MY_POSTS);
+      },
+    });
   };
 
   const selectOptions = [
@@ -72,11 +71,11 @@ export const CreatePostForm = () => {
         />
       </div>
 
-      <div className='flex flex-col gap-1 flex-1 min-h-0'>
+      <div className='relative flex flex-col gap-1 flex-1 min-h-0'>
         <label htmlFor='code' className='text-gray-700 font-medium'>
           Code of your snippet:
         </label>
-        <div className='relative flex-1 min-h-0 rounded-lg border border-gray-300 overflow-hidden'>
+        <div className='flex-1 min-h-0 rounded-lg border border-gray-300 overflow-hidden'>
           <Controller
             control={control}
             name='code'
@@ -105,9 +104,23 @@ export const CreatePostForm = () => {
         )}
       </div>
 
-      <Button size='large' type='primary' htmlType='submit' className='!mt-3'>
-        Create snippet
-      </Button>
+      <div className='relative flex flex-col gap-1'>
+        <Button
+          size='large'
+          type='primary'
+          htmlType='submit'
+          className='!mt-3'
+          disabled={isPending}
+          loading={isPending}
+        >
+          Create snippet
+        </Button>
+        {isError && (
+          <span className='absolute text-red-500 top-full text-sm'>
+            Something went wrong with posting your snippet!
+          </span>
+        )}
+      </div>
     </form>
   );
 };

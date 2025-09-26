@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RoutePath } from '../../../../app/routing';
-import { login } from '../api';
+import { useLogin } from '../api';
 import { loginSchema, type LoginFormType } from '../model';
 
 export const LoginForm = () => {
@@ -19,19 +18,9 @@ export const LoginForm = () => {
     mode: 'onSubmit',
   });
 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: login,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['auth'] });
-    },
-  });
+  const { mutate, isPending, isError } = useLogin({ reset });
 
   const submit = (data: LoginFormType) => {
-    console.log('LoginForm ', data);
-    reset();
-    navigate(RoutePath.BASE);
     mutate(data);
   };
 
@@ -65,9 +54,23 @@ export const LoginForm = () => {
         )}
       </div>
 
-      <Button size='large' type='primary' htmlType='submit' className='!mt-3'>
-        Submit
-      </Button>
+      <div className='relative flex flex-col gap-1'>
+        <Button
+          size='large'
+          type='primary'
+          htmlType='submit'
+          className='!mt-3'
+          disabled={isPending}
+          loading={isPending}
+        >
+          Submit
+        </Button>
+        {isError && (
+          <span className='absolute text-red-500 top-full text-sm'>
+            Incorrect password or username!
+          </span>
+        )}
+      </div>
 
       <div className='text-center text-base text-gray-600'>
         Don't have an account yet?{' '}

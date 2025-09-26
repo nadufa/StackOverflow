@@ -1,2 +1,1 @@
-export { useGetUserDescription } from './useUserDescription';
-export { useGetUserStatistic } from './useUserStatistic';
+export { deleteUser, useUserDelete } from './useUserDelete';

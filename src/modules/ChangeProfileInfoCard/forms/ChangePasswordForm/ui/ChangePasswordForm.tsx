@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
+import { useChangePassword } from '../api/useChangePassword';
 import { changePasswordSchema, type ChangePasswordFormType } from '../model';
 
 export const ChangePasswordForm = () => {
@@ -15,9 +16,10 @@ export const ChangePasswordForm = () => {
     mode: 'onSubmit',
   });
 
+  const { mutate, isPending } = useChangePassword({ reset });
+
   const submit = (data: ChangePasswordFormType) => {
-    console.log('ChangePasswordForm ', data);
-    reset();
+    mutate({ oldPassword: data.oldPassword, newPassword: data.newPassword });
   };
 
   return (
@@ -63,7 +65,13 @@ export const ChangePasswordForm = () => {
           )}
         </div>
 
-        <Button type='primary' htmlType='submit' className='!mt-2 !bg-[green]'>
+        <Button
+          type='primary'
+          htmlType='submit'
+          className='!mt-2 !bg-[green]'
+          disabled={isPending}
+          loading={isPending}
+        >
           Change password
         </Button>
       </form>

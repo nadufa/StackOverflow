@@ -1,6 +1,7 @@
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
 import { ChangeProfileInfoCard } from '../../modules/ChangeProfileInfoCard';
 import { ProfileInfoCard } from '../../modules/ProfileInfoCard';
+import { useGetUserStatistic } from './api';
 
 type ProtectedContext = {
   authUserId: string;
@@ -8,16 +9,24 @@ type ProtectedContext = {
 };
 
 export const Account = () => {
-  const { authUserUsername } = useOutletContext<ProtectedContext>();
+  const { userId } = useParams<{ userId: string }>();
+  const { authUserId } = useOutletContext<ProtectedContext>();
+  const { data } = useGetUserStatistic(userId || authUserId);
 
   return (
     <div className='flex flex-col items-center gap-5 w-fit h-full'>
       <h1 className='text-2xl font-bold text-gray-800 !m-0'>
-        Welcome, <span>{authUserUsername}</span>!
+        Welcome, <span>{data?.username}</span>!
       </h1>
 
-      <ProfileInfoCard isProfileOwner />
-      <ChangeProfileInfoCard />
+      <ProfileInfoCard
+        isProfileOwner={!userId}
+        statistic={data?.statistic}
+        id={data?.id || ''}
+        role={data?.role || ''}
+        username={data?.username || ''}
+      />
+      {!userId && <ChangeProfileInfoCard />}
     </div>
   );
 };

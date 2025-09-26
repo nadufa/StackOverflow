@@ -1,10 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
-import { useEditUsername } from '../api';
+import { useOutletContext } from 'react-router-dom';
+import { useChangeUsername } from '../api/useChangeUsername';
 import { changeUsernameSchema, type ChangeUsernameFormType } from '../model';
 
+type ProtectedContext = {
+  authUserId: string;
+  authUserUsername: string;
+};
+
 export const ChangeUsernameForm = () => {
+  const { authUserId } = useOutletContext<ProtectedContext>();
   const {
     control,
     handleSubmit,
@@ -16,10 +23,13 @@ export const ChangeUsernameForm = () => {
     mode: 'onSubmit',
   });
 
-  const { mutate, isPending } = useEditUsername();
+  const { mutate, isPending } = useChangeUsername({
+    reset,
+    authUserId,
+  });
 
   const submit = (data: ChangeUsernameFormType) => {
-    mutate({ username: data.newUsername });
+    mutate(data.newUsername);
     reset();
   };
 
@@ -40,7 +50,13 @@ export const ChangeUsernameForm = () => {
           )}
         </div>
 
-        <Button loading={isPending} type='primary' htmlType='submit' className='!mt-2 !bg-[green]'>
+        <Button
+          type='primary'
+          htmlType='submit'
+          className='!mt-2 !bg-[green]'
+          loading={isPending}
+          disabled={isPending}
+        >
           Change username
         </Button>
       </form>

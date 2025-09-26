@@ -43,9 +43,6 @@ export const PostItem = ({
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: fetchSetMark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['auth'] });
-    },
   });
 
   useEffect(() => {
@@ -56,6 +53,19 @@ export const PostItem = ({
       }
     };
   }, []);
+
+  const handleMark = (mark: 'like' | 'dislike') => {
+    mutate(
+      { snippetId: id, mark },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            predicate: (query) => query.queryKey[0] === 'snippets',
+          });
+        },
+      }
+    );
+  };
 
   return (
     <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden w-full'>
@@ -99,14 +109,14 @@ export const PostItem = ({
             <span className='text-xs'>{likesAmount}</span>
             <LikeFilled
               style={{ color: 'green', cursor: 'pointer' }}
-              onClick={() => mutate({ snippetId: id, mark: 'like' })}
+              onClick={() => handleMark('like')}
             />
           </div>
           <div className='flex flex-row gap-2 items-center'>
             <span className='text-xs'>{dislikesAmount}</span>
             <DislikeFilled
               style={{ color: 'red', cursor: 'pointer' }}
-              onClick={() => mutate({ snippetId: id, mark: 'dislike' })}
+              onClick={() => handleMark('dislike')}
             />
           </div>
         </div>

@@ -10,7 +10,7 @@ const fetchUserStatistic = (userId: string): Promise<IUserStatisticResponse> => 
 
 export const useGetUserStatistic = (userId: string) => {
   return useQuery<IUserStatisticResponse, Error, IUserStatistic>({
-    queryKey: ['users', userId],
+    queryKey: ['statistic', userId],
     queryFn: () => fetchUserStatistic(userId),
     select: (response) => response.data,
     enabled: !!userId,

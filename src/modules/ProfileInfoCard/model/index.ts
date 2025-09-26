@@ -1,7 +1,1 @@
-export type {
-  IStatistic,
-  IUserDescription,
-  IUserDescriptionResponse,
-  IUserStatistic,
-  IUserStatisticResponse,
-} from './types';
+export type { IUserDeleteData, IUserDeleteResponse } from './types';

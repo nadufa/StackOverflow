@@ -1,6 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { ApiClient } from '../../../../app/api';
-import type { IRegisterData, IRegisterRequest, IRegisterResponse } from '../model';
+import { RoutePath } from '../../../../app/routing';
+import type { IRegisterRequest, IRegisterResponse } from '../model';
 
 export const register = (data: {
   username: string;
@@ -12,10 +14,16 @@ export const register = (data: {
   });
 };
 
-export const useRegister = (username: string, password: string) => {
-  return useQuery<IRegisterResponse, Error, IRegisterData>({
-    queryKey: ['register'],
-    queryFn: () => register({ username, password }),
-    select: (response) => response.data,
+export const useRegister = ({ reset }: { reset: () => void }) => {
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: register,
+    onSuccess: () => {
+      reset();
+      queryClient.invalidateQueries({ queryKey: ['register'] });
+      navigate(RoutePath.LOGIN);
+    },
   });
 };

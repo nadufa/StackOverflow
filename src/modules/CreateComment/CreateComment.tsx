@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { SendIcon } from '../../assets/svg';
-import { CommentsList } from '../ChangeProfileInfoCard/CommentsList';
+import { CommentsList } from '../CommentsList';
 import { PostItem } from '../PostsList/components/PostItem';
 import { fetchCreateComment, useGetPost } from './api';
 import { createCommentSchema } from './model';
@@ -34,9 +34,6 @@ export const CreateComment = () => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: fetchCreateComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
-    },
   });
 
   const handleEmojiClick = (
@@ -49,9 +46,17 @@ export const CreateComment = () => {
   };
 
   const submit = (formData: CreateCommentFormType) => {
-    console.log('CreateCommentForm ', formData);
     if (!data?.id) return;
-    mutate({ ...formData, snippetId: data?.id ? +data.id : 0 });
+    mutate(
+      { ...formData, snippetId: data?.id ? +data.id : 0 },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            predicate: (query) => query.queryKey[0] === 'snippets',
+          });
+        },
+      }
+    );
     reset();
   };
 
@@ -68,49 +73,51 @@ export const CreateComment = () => {
         dislikesAmount={data?.marks.filter((item) => item.type === 'dislike').length || 0}
         commentsAmount={data?.comments.length || 0}
       />
-      <div className='flex flex-row gap-2 !mb-3'>
-        <Controller
-          control={control}
-          name='content'
-          render={({ field }) => (
-            <div className='relative w-full'>
-              <TextArea
-                rows={5}
-                placeholder='Your comment here'
-                value={field.value}
-                onChange={field.onChange}
-              />
+      <div className='relative flex flex-col gap-1'>
+        <div className='flex flex-row gap-2'>
+          <Controller
+            control={control}
+            name='content'
+            render={({ field }) => (
+              <div className='relative w-full'>
+                <TextArea
+                  rows={5}
+                  placeholder='Your comment here'
+                  value={field.value}
+                  onChange={field.onChange}
+                />
 
-              {showPicker && (
-                <div className='absolute right-0 mt-2 z-50'>
-                  <EmojiPicker
-                    onEmojiClick={(emojiData) =>
-                      handleEmojiClick(emojiData, field.onChange, field.value)
-                    }
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        />
-        <div className='flex flex-col gap-2 !pt-3 !pb-3 justify-between'>
-          <button
-            type='button'
-            onClick={() => setShowPicker((prev) => !prev)}
-            className='px-2 py-1 rounded cursor-pointer'
-          >
-            <SmileFilled style={{ fontSize: 25 }} />
-          </button>
+                {showPicker && (
+                  <div className='absolute right-0 mt-2 z-50'>
+                    <EmojiPicker
+                      onEmojiClick={(emojiData) =>
+                        handleEmojiClick(emojiData, field.onChange, field.value)
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          />
+          <div className='flex flex-col gap-2 !pt-3 !pb-3 justify-between'>
+            <button
+              type='button'
+              onClick={() => setShowPicker((prev) => !prev)}
+              className='px-2 py-1 rounded cursor-pointer'
+            >
+              <SmileFilled style={{ fontSize: 25 }} />
+            </button>
 
-          <Button htmlType='submit' className='cursor-pointer !bg-transparent !border-none'>
-            <SendIcon width={30} height={30} />
-          </Button>
+            <Button htmlType='submit' className='cursor-pointer !bg-transparent !border-none'>
+              <SendIcon width={30} height={30} />
+            </Button>
+          </div>
         </div>
+        {errors.content && (
+          <span className='absolute text-red-500 top-full text-sm'>{errors.content.message}</span>
+        )}
       </div>
-      {errors.content && (
-        <span className='absolute text-red-500 top-full text-sm'>{errors.content.message}</span>
-      )}
-      <CommentsList comments={data?.comments ?? []} />
+      <CommentsList comments={data?.comments.reverse() ?? []} />
     </form>
   );
 };

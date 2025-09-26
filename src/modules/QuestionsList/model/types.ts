@@ -12,6 +12,15 @@ interface IQuestionBase {
   attachedCode: string;
 }
 
+export interface IQuestionProps extends IQuestionBase {
+  isResolved: boolean;
+  user: {
+    id: string;
+    username: string;
+    role: string;
+  };
+}
+
 export interface IQuestion extends IQuestionBase {
   isResolved: boolean;
   user: {
@@ -72,10 +81,13 @@ export interface IUser {
   role: string;
 }
 
-export interface IAnswer {
+export interface IAnswerBase {
   id: string;
   content: string;
   isCorrect: boolean;
+}
+
+export interface IAnswer extends IAnswerBase {
   question: IQuestionBase;
   user: IUser;
 }
@@ -91,4 +103,24 @@ export interface IAnswerData {
 
 export interface IAnswerResponse {
   data: IAnswerData;
+}
+
+export interface IDeleteQuestionResponse {
+  data: IQuestion;
+}
+
+export interface IDeleteAnswerResponse {
+  data: IAnswerBase;
+}
+
+export interface IQuestionAnswer extends IAnswerBase {
+  user: IUser;
+}
+
+export interface IQuestionAnswerData {
+  data: IQuestionAnswer[];
+}
+
+export interface IQuestionAnswerResponse {
+  data: IQuestionAnswerData;
 }

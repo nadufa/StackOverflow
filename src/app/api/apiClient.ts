@@ -18,6 +18,18 @@ export class ApiClient {
     return axiosInstance.post<ResponseData>(url, data, config).then((res) => res.data);
   }
 
+  static PATCH<ResponseData, RequestData>({
+    url,
+    data,
+    config = {},
+  }: {
+    url: string;
+    data: RequestData;
+    config?: AxiosRequestConfig;
+  }) {
+    return axiosInstance.patch<ResponseData>(url, data, config).then((res) => res.data);
+  }
+
   static PUT<ResponseData, RequestData>({
     url,
     data,

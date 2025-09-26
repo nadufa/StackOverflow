@@ -1,3 +1,9 @@
+export interface IUserDescription {
+  id: string;
+  username: string;
+  role: string;
+}
+
 export interface IStatistic {
   snippetsCount: number | string;
   rating: number | string;
@@ -9,10 +15,10 @@ export interface IStatistic {
   regularAnswersCount: number | string;
 }
 
-export type IProfileInfo = {
-  isProfileOwner?: boolean;
-  statistic?: IStatistic;
-  id: string;
-  role: string;
-  username: string;
-};
+export interface IUserStatistic extends IUserDescription {
+  statistic: IStatistic;
+}
+
+export interface IUserStatisticResponse {
+  data: IUserStatistic;
+}

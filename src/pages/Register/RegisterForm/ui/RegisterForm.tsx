@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RoutePath } from '../../../../app/routing';
-import { register } from '../api';
+import { useRegister } from '../api';
 import { registerSchema, type RegisterFormType } from '../model';
 
 export const RegisterForm = () => {
@@ -19,21 +18,10 @@ export const RegisterForm = () => {
     mode: 'onSubmit',
   });
 
-  const navigate = useNavigate();
-
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: register,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['register'] });
-    },
-  });
+  const { mutate, isPending, isError } = useRegister({ reset });
 
   const submit = (data: RegisterFormType) => {
-    console.log('RegisterForm ', data);
     mutate(data);
-    reset();
-    navigate(RoutePath.LOGIN);
   };
 
   return (
@@ -82,9 +70,23 @@ export const RegisterForm = () => {
         )}
       </div>
 
-      <Button size='large' type='primary' htmlType='submit' className='!mt-3'>
-        Submit
-      </Button>
+      <div className='relative flex flex-col gap-1'>
+        <Button
+          size='large'
+          type='primary'
+          htmlType='submit'
+          className='!mt-3'
+          disabled={isPending}
+          loading={isPending}
+        >
+          Submit
+        </Button>
+        {isError && (
+          <span className='absolute text-red-500 top-full text-sm'>
+            User with this username already exists!
+          </span>
+        )}
+      </div>
 
       <div className='text-center text-base text-gray-600'>
         Already have an account?{' '}

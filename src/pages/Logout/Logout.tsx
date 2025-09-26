@@ -11,9 +11,5 @@ export const Logout = () => {
     navigate(RoutePath.LOGIN, { replace: true });
   }, [navigate]);
 
-  return (
-    <>
-      <span>Logging out..</span>
-    </>
-  );
+  return <span>Logging out..</span>;
 };

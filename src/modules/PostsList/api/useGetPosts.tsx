@@ -21,7 +21,7 @@ export const selectPosts = (
 
 export const useGetPosts = ({ ...rest }: ISearchState) => {
   return useInfiniteQuery({
-    queryKey: ['postslist', ...Object.values(rest)],
+    queryKey: ['snippets', ...Object.values(rest)],
     queryFn: ({ pageParam: page }) => fetchPosts({ page, ...rest }),
     select: selectPosts,
     initialPageParam: 1,

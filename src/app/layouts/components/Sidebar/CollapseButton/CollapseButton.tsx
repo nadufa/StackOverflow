@@ -8,7 +8,7 @@ interface ICollapseButton {
 }
 
 export const CollapseButton = ({ collapsed, collapse }: ICollapseButton) => {
-  const name = 'Nadezhda';
+  const name = 'CODELANG';
 
   return (
     <Button

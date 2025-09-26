@@ -3,27 +3,22 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { fetchAddAnswer } from '../../../api';
+import { useOutletContext } from 'react-router-dom';
+import { fetchAddAnswer, useGetAnswers } from '../../../api';
 import { type AddAnswerFormType, addAnswerSchema } from '../../../model';
 import { AnswerItem } from './AnswerItem';
 
-export const QuestionAnswersBlock = ({
-  id,
-  answers,
-}: {
-  id: string;
-  answers: {
-    id: string;
-    content: string;
-    isCorrect: boolean;
-  }[];
-}) => {
-  const {
-    control,
-    handleSubmit,
-    formState: {},
-    reset,
-  } = useForm<AddAnswerFormType>({
+type ProtectedContext = {
+  authUserId: string;
+  authUserUsername: string;
+};
+
+export const QuestionAnswersBlock = ({ id }: { id: string }) => {
+  const { authUserId } = useOutletContext<ProtectedContext>();
+
+  const { data } = useGetAnswers(+id);
+
+  const { control, handleSubmit, reset } = useForm<AddAnswerFormType>({
     defaultValues: { content: '' },
     resolver: zodResolver(addAnswerSchema),
     mode: 'onSubmit',
@@ -34,15 +29,20 @@ export const QuestionAnswersBlock = ({
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: fetchAddAnswer,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['answers'] });
-    },
   });
 
   const submit = (formData: AddAnswerFormType) => {
-    console.log('CreateCommentForm ', formData);
     if (!id) return;
-    mutate({ ...formData, questionId: Number(id), content: formData.content });
+    mutate(
+      { ...formData, questionId: Number(id), content: formData.content },
+      {
+        onSuccess: () => {
+          console.log('success');
+
+          queryClient.invalidateQueries({ queryKey: ['getAnswers', +id] });
+        },
+      }
+    );
     reset();
   };
 
@@ -52,7 +52,7 @@ export const QuestionAnswersBlock = ({
         onClick={() => setIsAnswersOpen(!isAnswersOpen)}
         className='flex items-center justify-between w-full !p-2 hover:bg-gray-50 rounded-lg'
       >
-        <span className='font-medium'>Answers ({answers.length})</span>
+        <span className='font-medium'>Answers ({data?.data.length ?? 0})</span>
         <svg
           className={`w-4 h-4 transition-transform ${isAnswersOpen ? 'rotate-180' : ''}`}
           fill='none'
@@ -65,9 +65,18 @@ export const QuestionAnswersBlock = ({
 
       {isAnswersOpen && (
         <div className='flex flex-col gap-2'>
-          {answers.map(({ content, id, isCorrect }) => {
+          {data?.data.map(({ content, id: answer_id, isCorrect, user }) => {
             return content.trim() ? (
-              <AnswerItem key={id} id={id} content={content} isCorrect={isCorrect} />
+              <AnswerItem
+                key={answer_id}
+                id={answer_id}
+                content={content}
+                isCorrect={isCorrect}
+                authUserId={authUserId}
+                userId={user.id}
+                username={user.username}
+                questionId={id}
+              />
             ) : null;
           })}
 

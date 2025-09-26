@@ -8,9 +8,5 @@ type ProtectedContext = {
 
 export const MyPosts = () => {
   const { authUserId } = useOutletContext<ProtectedContext>();
-  return (
-    <>
-      <PostsList userId={authUserId} />
-    </>
-  );
+  return <PostsList userId={authUserId} />;
 };

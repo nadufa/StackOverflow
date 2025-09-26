@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { ApiClient } from '../../../../app/api';
+import { RoutePath } from '../../../../app/routing';
 import type { IAuthResponse, IAuthUserData, ILoginRequest, ILoginResponse } from '../model';
 
 export const auth = (): Promise<IAuthResponse> => {
@@ -24,10 +26,15 @@ export const useAuth = () => {
   });
 };
 
-export const useLogin = (username: string, password: string) => {
-  return useQuery<ILoginResponse, Error, IAuthUserData>({
-    queryKey: ['auth', 'login'],
-    queryFn: () => login({ username, password }),
-    select: (response) => response.data,
+export const useLogin = ({ reset }: { reset: () => void }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+      reset();
+      navigate(RoutePath.BASE);
+    },
   });
 };
