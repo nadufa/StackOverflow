@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IMarkData, IMarkResponse, IMarkValue, MarkType } from '../model';
 
 export const fetchSetMark = (data: {

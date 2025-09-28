@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ApiClient } from '../../../../app/api';
-import { RoutePath } from '../../../../app/routing';
+
+import { ApiClient } from '@/app/api';
+import { RoutePath } from '@/app/routing';
 import type { IAuthResponse, IAuthUserData, ILoginRequest, ILoginResponse } from '../model';
 
 export const auth = (): Promise<IAuthResponse> => {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../../app/api';
 import type { ILanguageOptionsData } from '../model';
+import { ApiClient } from '@/app/api';
 
 const fetchLanguageOptions = (): Promise<ILanguageOptionsData> => {
   return ApiClient.GET<ILanguageOptionsData>({

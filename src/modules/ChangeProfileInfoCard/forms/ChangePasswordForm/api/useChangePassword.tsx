@@ -1,7 +1,7 @@
+import { ApiClient } from '@/app/api';
+import { useNotification } from '@/app/providers';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import { ApiClient } from '../../../../../app/api';
-import { useNotification } from '../../../../../app/providers';
 import type { IUserPasswordRequest, IUserPasswordResponse } from '../model';
 
 export const changePassword = (data: {

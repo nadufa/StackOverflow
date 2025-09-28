@@ -1,6 +1,7 @@
 import { generatePath, useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../app/routing';
-import { PersonIcon } from '../../assets/svg';
+
+import { RoutePath } from '@/app/routing';
+import { PersonIcon } from '@/assets/svg';
 import { type IAuthorProps } from './types';
 
 export const Author = ({ id, name }: IAuthorProps) => {

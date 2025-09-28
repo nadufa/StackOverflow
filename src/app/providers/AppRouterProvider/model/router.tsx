@@ -1,4 +1,5 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { RootLayout } from '@/app/layouts';
+import { RoutePath } from '@/app/routing';
 import {
   Account,
   CreatePost,
@@ -14,9 +15,8 @@ import {
   Questions,
   Register,
   Users,
-} from '../../../../pages';
-import { RootLayout } from '../../../layouts';
-import { RoutePath } from '../../../routing';
+} from '@/pages';
+import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const router = createBrowserRouter([

@@ -1,6 +1,6 @@
+import { RoutePath } from '@/app/routing';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../app/routing';
 import { useLogout } from './api';
 
 export const Logout = () => {

@@ -2,8 +2,8 @@ import { DeleteOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../app/routing';
 import { deleteUser } from '../api';
+import { RoutePath } from '@/app/routing';
 
 export const ProfileToolsPanel = () => {
   const navigate = useNavigate();

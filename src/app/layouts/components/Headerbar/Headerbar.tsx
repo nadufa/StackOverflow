@@ -1,8 +1,8 @@
+import { RoutePath } from '@/app/routing';
+import { CodeIcon, LanguageIcon } from '@/assets/svg';
 import { Button, Layout } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CodeIcon, LanguageIcon } from '../../../../assets/svg';
-import { RoutePath } from '../../../routing';
 
 const { Header } = Layout;
 

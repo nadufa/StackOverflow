@@ -1,8 +1,8 @@
+import { RoutePath } from '@/app/routing';
+import { UserIcon } from '@/assets/image';
+import { UserDescription } from '@/components/UserDescription';
 import { Button } from 'antd';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../../app/routing';
-import { UserIcon } from '../../../../assets/image';
-import { UserDescription } from '../../../../components/UserDescription';
 
 interface IUserItem {
   id: number;

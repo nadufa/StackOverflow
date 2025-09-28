@@ -4,9 +4,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Select } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../../app/routing';
 import { fetchCreatePost, useGetLanguageOptions } from '../api';
 import { createPostSchema, type CreatePostFormType } from '../model';
+import { RoutePath } from '@/app/routing';
 
 export const CreatePostForm = () => {
   const { data: languageOptions } = useGetLanguageOptions();

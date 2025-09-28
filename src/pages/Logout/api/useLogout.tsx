@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 
 export const logout = () => {
   return ApiClient.POST<void, undefined>({

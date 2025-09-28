@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IDeleteQuestionResponse, IQuestion } from '../model';
 
 export const deleteQuestion = (questionId: number): Promise<IDeleteQuestionResponse> => {

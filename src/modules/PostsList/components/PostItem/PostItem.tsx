@@ -4,10 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as monaco from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../../app/routing';
-import { getLanguageId } from '../../../../app/utils/monaco';
-import { BracketsIcon } from '../../../../assets/svg';
-import { Author } from '../../../../components/Author';
+
+import { RoutePath } from '@/app/routing';
+import { getLanguageId } from '@/app/utils/monaco';
+import { BracketsIcon } from '@/assets/svg';
+import { Author } from '@/components/Author';
 import { fetchSetMark } from '../../api';
 import type { IPostItemProps } from './types';
 

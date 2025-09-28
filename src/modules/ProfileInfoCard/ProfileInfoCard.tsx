@@ -1,6 +1,6 @@
-import { UserIcon } from '../../assets/image';
-import { UserDescription } from '../../components/UserDescription';
-import { UserStatistics } from '../../components/UserStatistics';
+import { UserIcon } from '@/assets/image';
+import { UserDescription } from '@/components/UserDescription';
+import { UserStatistics } from '@/components/UserStatistics';
 import { ProfileToolsPanel } from './ProfileToolsPanel';
 import { type IProfileInfo } from './types';
 

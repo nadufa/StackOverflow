@@ -1,6 +1,6 @@
+import { RoutePath } from '@/app/routing';
+import { useAuth } from '@/pages/Login/LoginForm/api';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../../../pages/Login/LoginForm/api/useLogin';
-import { RoutePath } from '../../../routing';
 
 export const ProtectedRoute = () => {
   const { data, isLoading } = useAuth();

@@ -1,8 +1,8 @@
+import { RoutePath } from '@/app/routing';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { RoutePath } from '../../../../app/routing';
 import { useLogin } from '../api';
 import { loginSchema, type LoginFormType } from '../model';
 

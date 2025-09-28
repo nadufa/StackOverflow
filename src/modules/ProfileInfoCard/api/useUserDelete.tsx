@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IUserDeleteData, IUserDeleteResponse } from '../model';
+import { ApiClient } from '@/app/api';
 
 export const deleteUser = (): Promise<IUserDeleteResponse> => {
   return ApiClient.DELETE<IUserDeleteResponse>({

@@ -1,6 +1,7 @@
 import { useOutletContext, useParams } from 'react-router-dom';
-import { ChangeProfileInfoCard } from '../../modules/ChangeProfileInfoCard';
-import { ProfileInfoCard } from '../../modules/ProfileInfoCard';
+
+import { ChangeProfileInfoCard } from '@/modules/ChangeProfileInfoCard';
+import { ProfileInfoCard } from '@/modules/ProfileInfoCard';
 import { useGetUserStatistic } from './api';
 
 type ProtectedContext = {

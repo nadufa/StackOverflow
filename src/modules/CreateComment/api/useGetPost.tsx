@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IPost, IPostResponse } from '../model';
 
 const fetchPost = (snippetId: string): Promise<IPostResponse> => {

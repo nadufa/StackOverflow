@@ -1,5 +1,5 @@
+import { PostsList } from '@/modules/PostsList';
 import { useOutletContext } from 'react-router-dom';
-import { PostsList } from '../../modules/PostsList';
 
 type ProtectedContext = {
   authUserId: string;

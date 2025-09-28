@@ -1,6 +1,6 @@
+import { RoutePath } from '@/app/routing';
 import { Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../../routing';
 import { NavItems } from './NavItems';
 
 export const NavMenu = () => {

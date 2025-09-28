@@ -1,6 +1,6 @@
+import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { useDebounce } from 'use-debounce';
 import { useStore } from 'zustand';
-import { LoadMoreButton } from '../../components/LoadMoreButton';
 import { useGetPosts } from './api';
 import { PostItem, PostsSearchBar } from './components';
 import { postsStore } from './model/postsStore';

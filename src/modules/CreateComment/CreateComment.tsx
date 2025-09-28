@@ -1,3 +1,4 @@
+import { SendIcon } from '@/assets/svg';
 import { SmileFilled } from '@ant-design/icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -6,7 +7,6 @@ import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { SendIcon } from '../../assets/svg';
 import { CommentsList } from '../CommentsList';
 import { PostItem } from '../PostsList/components/PostItem';
 import { fetchCreateComment, useGetPost } from './api';

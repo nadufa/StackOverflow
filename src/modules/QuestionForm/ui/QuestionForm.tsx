@@ -1,10 +1,10 @@
+import { RoutePath } from '@/app/routing';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Editor from '@monaco-editor/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { RoutePath } from '../../../app/routing';
 import { fetchCreateQuestion } from '../api';
 import { questionSchema, type QuestionFormType } from '../model';
 import { type QuestionFormPropsType } from '../types';

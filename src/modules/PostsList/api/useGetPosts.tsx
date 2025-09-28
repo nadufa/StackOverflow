@@ -1,6 +1,6 @@
+import { axiosInstance } from '@/app/api/axiosInstance';
 import { keepPreviousData, useInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
 import type { AxiosResponse } from 'axios';
-import { axiosInstance } from '../../../app/api/axiosInstance';
 import type { IPostsResponse } from '../model';
 import type { ISearchState } from '../model/types';
 import { getParams, type IGetParams } from './lib/getParams';

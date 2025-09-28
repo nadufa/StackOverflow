@@ -1,9 +1,9 @@
+import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { useDebounce } from 'use-debounce';
 import { useStore } from 'zustand';
 import { useGetUsers } from './api';
 import { UserItem, UsersSearchBar } from './components';
 import { usersStore } from './model/usersStore';
-import { LoadMoreButton } from '../../components/LoadMoreButton';
 
 export const UsersList = () => {
   const searchState = useStore(usersStore, (state) => state.searchState);

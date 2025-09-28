@@ -1,9 +1,9 @@
 import { useDebounce } from 'use-debounce';
 import { useStore } from 'zustand';
-import { LoadMoreButton } from '../../components/LoadMoreButton';
 import { useGetQuestions } from './api';
 import { QuestionItem, QuestionsSearchBar } from './components';
 import { questionsStore } from './model';
+import { LoadMoreButton } from '@/components/LoadMoreButton';
 
 export const QuestionsList = () => {
   const searchState = useStore(questionsStore, (state) => state.searchState);

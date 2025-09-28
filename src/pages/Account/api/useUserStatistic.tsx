@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IUserStatistic, IUserStatisticResponse } from '../model';
 
 const fetchUserStatistic = (userId: string): Promise<IUserStatisticResponse> => {

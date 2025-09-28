@@ -1,7 +1,7 @@
+import { TargetIcon } from '@/assets/svg';
+import { deleteQuestion } from '@/modules/QuestionsList/api';
 import { DeleteFilled } from '@ant-design/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { TargetIcon } from '../../../../../assets/svg';
-import { deleteQuestion } from '../../../api';
 
 interface IQuestionDescription {
   title: string;

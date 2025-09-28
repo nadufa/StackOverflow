@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { ICommentRequest, ICommentResponse, ICommentResponseData } from '../model';
+import { ApiClient } from '@/app/api';
 
 export const fetchCreateComment = (data: {
   content: string;

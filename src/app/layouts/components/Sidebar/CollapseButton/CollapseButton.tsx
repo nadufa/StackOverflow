@@ -1,6 +1,6 @@
+import { UserIcon } from '@/assets/image';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { UserIcon } from '../../../../../assets/image';
 
 interface ICollapseButton {
   collapsed: boolean;

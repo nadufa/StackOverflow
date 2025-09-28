@@ -4,8 +4,9 @@ import { Button, Input } from 'antd';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
-import { fetchAddAnswer, useGetAnswers } from '../../../api';
-import { type AddAnswerFormType, addAnswerSchema } from '../../../model';
+
+import { fetchAddAnswer, useGetAnswers } from '@/modules/QuestionsList/api';
+import { addAnswerSchema, type AddAnswerFormType } from '@/modules/QuestionsList/model';
 import { AnswerItem } from './AnswerItem';
 
 type ProtectedContext = {

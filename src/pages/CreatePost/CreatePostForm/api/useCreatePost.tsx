@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../../app/api';
 import type { IPost, IPostCreated, IPostResponse } from '../model';
+import { ApiClient } from '@/app/api';
 
 export const fetchCreatePost = (data: {
   language: string;

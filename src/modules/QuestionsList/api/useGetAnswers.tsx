@@ -1,5 +1,5 @@
+import { ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IQuestionAnswerData } from '../model';
 
 export const getAnswers = (questionId: number): Promise<IQuestionAnswerData> => {

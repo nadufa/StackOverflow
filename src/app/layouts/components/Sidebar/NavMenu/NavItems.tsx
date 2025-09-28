@@ -1,3 +1,4 @@
+import { RoutePath } from '@/app/routing';
 import {
   EditOutlined,
   HomeOutlined,
@@ -7,7 +8,6 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { RoutePath } from '../../../../routing';
 
 export const NavItems: MenuProps['items'] = [
   {

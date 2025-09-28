@@ -1,7 +1,7 @@
 import { App as AntdApp } from 'antd';
 import { AppRouterProvider, NotificationProvider, QueryProvider, ThemeProvider } from './providers';
 
-function App() {
+export const App = () => {
   return (
     <ThemeProvider>
       <QueryProvider>
@@ -13,6 +13,4 @@ function App() {
       </QueryProvider>
     </ThemeProvider>
   );
-}
-
-export default App;
+};

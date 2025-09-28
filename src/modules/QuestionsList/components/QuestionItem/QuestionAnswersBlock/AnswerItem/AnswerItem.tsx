@@ -1,7 +1,7 @@
+import { Author } from '@/components/Author';
+import { deleteAnswer } from '@/modules/QuestionsList/api';
 import { DeleteFilled } from '@ant-design/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Author } from '../../../../../../components/Author';
-import { deleteAnswer } from '../../../../api';
 
 export const AnswerItem = ({
   id,

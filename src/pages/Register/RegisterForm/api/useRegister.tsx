@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ApiClient } from '../../../../app/api';
-import { useNotification } from '../../../../app/providers';
-import { RoutePath } from '../../../../app/routing';
+
+import { ApiClient } from '@/app/api';
+import { useNotification } from '@/app/providers';
+import { RoutePath } from '@/app/routing';
 import type { IRegisterRequest, IRegisterResponse } from '../model';
 
 export const register = (data: {

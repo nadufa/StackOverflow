@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../../../app/api';
 import type { IQuestionData, IQuestionRequest, IQuestionResponse } from '../model';
+import { ApiClient } from '@/app/api';
 
 export const fetchCreateQuestion = (data: {
   title: string;

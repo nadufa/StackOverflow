@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import { ApiClient } from '../../../../../app/api';
-import { useNotification } from '../../../../../app/providers';
-import type { IUserUsernameRequest, IUserUsernameResponse } from '../model';
 
-export const changeUsername = (username: string): Promise<IUserUsernameResponse> => {
-  return ApiClient.PATCH<IUserUsernameResponse, IUserUsernameRequest>({
+import { ApiClient } from '@/app/api';
+import { useNotification } from '@/app/providers';
+
+export const changeUsername = (username: string) => {
+  return ApiClient.PATCH({
     url: `me`,
     data: { username },
   });
