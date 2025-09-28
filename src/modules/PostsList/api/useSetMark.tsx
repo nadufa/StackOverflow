@@ -1,4 +1,4 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IMarkData, IMarkResponse, IMarkValue, MarkType } from '../model';
 
@@ -7,7 +7,7 @@ export const fetchSetMark = (data: {
   mark: MarkType;
 }): Promise<IMarkResponse> => {
   return ApiClient.POST<IMarkResponse, IMarkValue>({
-    url: `snippets/${data.snippetId}/mark`,
+    url: API_ENDPOINTS.SNIPPETS.MARK(data.snippetId),
     data: { mark: data.mark },
   });
 };

@@ -24,8 +24,8 @@ export const UsersList = () => {
       <div
         className={`flex flex-col w-fit min-w-2xl gap-4 ${isPlaceholderData ? 'opacity-40' : ''}`}
       >
-        {data?.map((el) =>
-          el.data.data.map(({ id, role, username }) => (
+        {data?.map((element) =>
+          element.data.data.map(({ id, role, username }) => (
             <UserItem key={id} id={id} role={role} username={username} />
           ))
         )}

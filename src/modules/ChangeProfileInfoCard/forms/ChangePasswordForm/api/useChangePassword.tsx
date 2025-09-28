@@ -1,15 +1,11 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useNotification } from '@/app/providers';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import type { IUserPasswordRequest, IUserPasswordResponse } from '../model';
 
-export const changePassword = (data: {
-  oldPassword: string;
-  newPassword: string;
-}): Promise<IUserPasswordResponse> => {
-  return ApiClient.PATCH<IUserPasswordResponse, IUserPasswordRequest>({
-    url: `me/password`,
+export const changePassword = (data: { oldPassword: string; newPassword: string }) => {
+  return ApiClient.PATCH({
+    url: API_ENDPOINTS.USER.PASSWORD,
     data,
   });
 };

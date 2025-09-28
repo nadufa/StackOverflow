@@ -1,4 +1,4 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IAnswerData, IAnswerRequest, IAnswerResponse } from '../model';
 
@@ -7,7 +7,7 @@ export const fetchAddAnswer = (data: {
   questionId: number;
 }): Promise<IAnswerResponse> => {
   return ApiClient.POST<IAnswerResponse, IAnswerRequest>({
-    url: `answers`,
+    url: API_ENDPOINTS.ANSWERS.BASE,
     data,
   });
 };

@@ -1,13 +1,13 @@
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IPost, IPostCreated, IPostResponse } from '../model';
-import { ApiClient } from '@/app/api';
 
 export const fetchCreatePost = (data: {
   language: string;
   code: string;
 }): Promise<IPostResponse> => {
   return ApiClient.POST<IPostResponse, IPost>({
-    url: `snippets`,
+    url: API_ENDPOINTS.SNIPPETS.BASE,
     data,
   });
 };

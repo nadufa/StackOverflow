@@ -13,6 +13,10 @@ interface IUserItem {
 export const UserItem = ({ id, role, username }: IUserItem) => {
   const navigate = useNavigate();
 
+  const onUsersHandler = () => {
+    navigate(generatePath(RoutePath.USER, { userId: id.toString() }));
+  };
+
   return (
     <div className='flex justify-around !py-6 border-2 border-gray-200 rounded-lg bg-white w-2xl'>
       <img
@@ -23,10 +27,7 @@ export const UserItem = ({ id, role, username }: IUserItem) => {
       <div className='flex flex-col gap-2'>
         <UserDescription id={id} role={role} username={username} />
 
-        <Button
-          className='w-30'
-          onClick={() => navigate(generatePath(RoutePath.USER, { userId: id.toString() }))}
-        >
+        <Button className='w-30' onClick={onUsersHandler}>
           Go to user page
         </Button>
       </div>

@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useNotification } from '@/app/providers';
 
 export const changeUsername = (username: string) => {
   return ApiClient.PATCH({
-    url: `me`,
+    url: API_ENDPOINTS.USER.PROFILE,
     data: { username },
   });
 };

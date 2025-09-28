@@ -29,8 +29,8 @@ export const PostsList = ({ userId = null }: IPostsListProps) => {
       <div
         className={`flex flex-col w-full min-w-2xl gap-4 ${isPlaceholderData ? 'opacity-40' : ''}`}
       >
-        {data?.map((el) =>
-          el.data.data.map(({ id, code, language, user, marks, comments }) => (
+        {data?.map((element) =>
+          element.data.data.map(({ id, code, language, user, marks, comments }) => (
             <PostItem
               key={id}
               id={id}

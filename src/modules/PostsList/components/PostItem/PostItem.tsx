@@ -68,6 +68,10 @@ export const PostItem = ({
     );
   };
 
+  const onCommentsHandler = () => {
+    navigate(generatePath(RoutePath.POST_COMMENTS, { postId: id.toString() }));
+  };
+
   return (
     <div className='flex flex-col border-2 border-gray-200 rounded-lg bg-white overflow-hidden w-full'>
       <div className='flex flex-row !pl-2 !pr-2 place-content-between items-center h-7 w-full'>
@@ -121,10 +125,7 @@ export const PostItem = ({
             />
           </div>
         </div>
-        <div
-          className='flex flex-row gap-1 items-center'
-          onClick={() => navigate(generatePath(RoutePath.POST_COMMENTS, { postId: id.toString() }))}
-        >
+        <div className='flex flex-row gap-1 items-center' onClick={onCommentsHandler}>
           <span className='text-xs'>{commentsAmount}</span>
           <CommentOutlined style={{ cursor: 'pointer' }} />
         </div>

@@ -1,10 +1,10 @@
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { ILanguageOptionsData } from '../model';
-import { ApiClient } from '@/app/api';
 
 const fetchLanguageOptions = (): Promise<ILanguageOptionsData> => {
   return ApiClient.GET<ILanguageOptionsData>({
-    url: `snippets/languages`,
+    url: API_ENDPOINTS.SNIPPETS.LANGUAGES,
   });
 };
 

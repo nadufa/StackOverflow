@@ -1,10 +1,10 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IUserStatistic, IUserStatisticResponse } from '../model';
 
 const fetchUserStatistic = (userId: string): Promise<IUserStatisticResponse> => {
   return ApiClient.GET<IUserStatisticResponse>({
-    url: `users/${userId}/statistic`,
+    url: API_ENDPOINTS.USER.STATISTIC(userId),
   });
 };
 

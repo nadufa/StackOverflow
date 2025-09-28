@@ -1,10 +1,10 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IDeleteQuestionResponse, IQuestion } from '../model';
 
 export const deleteQuestion = (questionId: number): Promise<IDeleteQuestionResponse> => {
   return ApiClient.DELETE<IDeleteQuestionResponse>({
-    url: `questions/${questionId}`,
+    url: API_ENDPOINTS.QUESTIONS.SINGLE(questionId),
   });
 };
 

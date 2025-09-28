@@ -1,13 +1,13 @@
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { ICommentRequest, ICommentResponse, ICommentResponseData } from '../model';
-import { ApiClient } from '@/app/api';
 
 export const fetchCreateComment = (data: {
   content: string;
   snippetId: number;
 }): Promise<ICommentResponse> => {
   return ApiClient.POST<ICommentResponse, ICommentRequest>({
-    url: `comments`,
+    url: API_ENDPOINTS.COMMENTS.BASE,
     data,
   });
 };

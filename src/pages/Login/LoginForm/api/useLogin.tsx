@@ -2,19 +2,19 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { RoutePath } from '@/app/routing';
 import type { IAuthResponse, IAuthUserData, ILoginRequest, ILoginResponse } from '../model';
 
 export const auth = (): Promise<IAuthResponse> => {
   return ApiClient.GET<IAuthResponse>({
-    url: `auth`,
+    url: API_ENDPOINTS.AUTH.BASE,
   });
 };
 
 export const login = (data: { username: string; password: string }): Promise<ILoginResponse> => {
   return ApiClient.POST<ILoginResponse, ILoginRequest>({
-    url: `auth/login`,
+    url: API_ENDPOINTS.AUTH.LOGIN,
     data,
   });
 };

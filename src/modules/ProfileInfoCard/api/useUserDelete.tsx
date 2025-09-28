@@ -1,10 +1,10 @@
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 import type { IUserDeleteData, IUserDeleteResponse } from '../model';
-import { ApiClient } from '@/app/api';
 
 export const deleteUser = (): Promise<IUserDeleteResponse> => {
   return ApiClient.DELETE<IUserDeleteResponse>({
-    url: `me`,
+    url: API_ENDPOINTS.USER.DELETE,
   });
 };
 

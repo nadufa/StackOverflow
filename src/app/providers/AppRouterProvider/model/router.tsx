@@ -1,5 +1,8 @@
 import { RootLayout } from '@/app/layouts';
 import { RoutePath } from '@/app/routing';
+import { Spin } from 'antd';
+import { Suspense } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 import {
   Account,
   CreatePost,
@@ -15,35 +18,46 @@ import {
   Questions,
   Register,
   Users,
-} from '@/pages';
-import { createBrowserRouter } from 'react-router-dom';
+} from './lazyComponents';
 import { ProtectedRoute } from './ProtectedRoute';
+
+const Loading = () => (
+  <div className='flex justify-center items-center h-64'>
+    <Spin size='large' />
+  </div>
+);
+
+export const createLazyElement = (Component: React.ComponentType) => (
+  <Suspense fallback={<Loading />}>
+    <Component />
+  </Suspense>
+);
 
 export const router = createBrowserRouter([
   {
-    errorElement: <Error />,
+    errorElement: createLazyElement(Error),
     element: <RootLayout />,
     children: [
-      { path: RoutePath.BASE, element: <Home /> },
-      { path: RoutePath.LOGIN, element: <Login /> },
-      { path: RoutePath.LOGOUT, element: <Logout /> },
-      { path: RoutePath.REGISTER, element: <Register /> },
-      { path: RoutePath.NOT_FOUND, element: <Error /> },
+      { path: RoutePath.BASE, element: createLazyElement(Home) },
+      { path: RoutePath.LOGIN, element: createLazyElement(Login) },
+      { path: RoutePath.LOGOUT, element: createLazyElement(Logout) },
+      { path: RoutePath.REGISTER, element: createLazyElement(Register) },
+      { path: RoutePath.NOT_FOUND, element: createLazyElement(Error) },
       {
         element: <ProtectedRoute />,
         children: [
           {
             children: [
-              { path: RoutePath.ACCOUNT, element: <Account /> },
-              { path: RoutePath.CREATE_POST, element: <CreatePost /> },
-              { path: RoutePath.CREATE_QUESTION, element: <CreateQuestion /> },
-              { path: RoutePath.EDIT_POST, element: <EditPost /> },
-              { path: RoutePath.EDIT_QUESTION, element: <EditQuestion /> },
-              { path: RoutePath.MY_POSTS, element: <MyPosts /> },
-              { path: RoutePath.POST_COMMENTS, element: <PostComments /> },
-              { path: RoutePath.QUESTIONS_LIST, element: <Questions /> },
-              { path: RoutePath.USER, element: <Account /> },
-              { path: RoutePath.USERS_LIST, element: <Users /> },
+              { path: RoutePath.ACCOUNT, element: createLazyElement(Account) },
+              { path: RoutePath.CREATE_POST, element: createLazyElement(CreatePost) },
+              { path: RoutePath.CREATE_QUESTION, element: createLazyElement(CreateQuestion) },
+              { path: RoutePath.EDIT_POST, element: createLazyElement(EditPost) },
+              { path: RoutePath.EDIT_QUESTION, element: createLazyElement(EditQuestion) },
+              { path: RoutePath.MY_POSTS, element: createLazyElement(MyPosts) },
+              { path: RoutePath.POST_COMMENTS, element: createLazyElement(PostComments) },
+              { path: RoutePath.QUESTIONS_LIST, element: createLazyElement(Questions) },
+              { path: RoutePath.USER, element: createLazyElement(Account) },
+              { path: RoutePath.USERS_LIST, element: createLazyElement(Users) },
             ],
           },
         ],

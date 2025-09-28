@@ -1,9 +1,9 @@
-import { ApiClient } from '@/app/api';
+import { API_ENDPOINTS, ApiClient } from '@/app/api';
 import { useQuery } from '@tanstack/react-query';
 
 export const logout = () => {
   return ApiClient.POST<void, undefined>({
-    url: `auth/logout`,
+    url: API_ENDPOINTS.AUTH.LOGOUT,
     data: undefined,
   });
 };
