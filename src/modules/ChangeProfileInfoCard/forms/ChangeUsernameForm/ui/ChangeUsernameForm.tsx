@@ -17,6 +17,8 @@ export const ChangeUsernameForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
+    clearErrors,
   } = useForm<ChangeUsernameFormType>({
     defaultValues: { newUsername: '' },
     resolver: zodResolver(changeUsernameSchema),
@@ -26,11 +28,19 @@ export const ChangeUsernameForm = () => {
   const { mutate, isPending } = useChangeUsername({
     reset,
     authUserId,
+    onError: (errorMessage: string) => {
+      setError('root', { message: errorMessage });
+    },
   });
 
   const submit = (data: ChangeUsernameFormType) => {
     mutate(data.newUsername);
-    reset();
+  };
+
+  const handleInputChange = () => {
+    if (errors.root) {
+      clearErrors('root');
+    }
   };
 
   return (
@@ -41,7 +51,16 @@ export const ChangeUsernameForm = () => {
           <Controller
             name='newUsername'
             control={control}
-            render={({ field }) => <Input placeholder='New username' {...field} />}
+            render={({ field }) => (
+              <Input
+                placeholder='New username'
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange();
+                }}
+              />
+            )}
           />
           {errors.newUsername && (
             <span className='absolute text-red-500 top-full text-xs'>
@@ -49,6 +68,8 @@ export const ChangeUsernameForm = () => {
             </span>
           )}
         </div>
+
+        {errors.root && <span className='text-red-500 text-xs'>{errors.root.message}</span>}
 
         <Button
           type='primary'

@@ -12,16 +12,29 @@ export const LoginForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
+    clearErrors,
   } = useForm<LoginFormType>({
     defaultValues: { username: '', password: '' },
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
   });
 
-  const { mutate, isPending, isError } = useLogin({ reset });
+  const { mutate, isPending } = useLogin({
+    reset,
+    onError: (errorMessage: string) => {
+      setError('root', { message: errorMessage });
+    },
+  });
 
   const submit = (data: LoginFormType) => {
     mutate(data);
+  };
+
+  const handleInputChange = () => {
+    if (errors.root) {
+      clearErrors('root');
+    }
   };
 
   return (
@@ -33,7 +46,17 @@ export const LoginForm = () => {
         <Controller
           name='username'
           control={control}
-          render={({ field }) => <Input size='large' id='username' {...field} />}
+          render={({ field }) => (
+            <Input
+              size='large'
+              id='username'
+              {...field}
+              onChange={(e) => {
+                field.onChange(e);
+                handleInputChange();
+              }}
+            />
+          )}
         />
         {errors.username && (
           <span className='absolute text-red-500 top-full text-sm'>{errors.username.message}</span>
@@ -47,7 +70,17 @@ export const LoginForm = () => {
         <Controller
           name='password'
           control={control}
-          render={({ field }) => <Input.Password size='large' id='password' {...field} />}
+          render={({ field }) => (
+            <Input.Password
+              size='large'
+              id='password'
+              {...field}
+              onChange={(e) => {
+                field.onChange(e);
+                handleInputChange();
+              }}
+            />
+          )}
         />
         {errors.password && (
           <span className='absolute text-red-500 top-full text-sm'>{errors.password.message}</span>
@@ -55,6 +88,7 @@ export const LoginForm = () => {
       </div>
 
       <div className='relative flex flex-col gap-1'>
+        {errors.root && <span className='text-red-500 text-sm'>{errors.root.message}</span>}
         <Button
           size='large'
           type='primary'
@@ -65,11 +99,6 @@ export const LoginForm = () => {
         >
           Submit
         </Button>
-        {isError && (
-          <span className='absolute text-red-500 top-full text-sm'>
-            Incorrect password or username!
-          </span>
-        )}
       </div>
 
       <div className='text-center text-base text-gray-600'>

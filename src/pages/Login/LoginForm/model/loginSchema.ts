@@ -1,13 +1,9 @@
 import z from 'zod';
 
 export const loginSchema = z.object({
-  username: z
-    .string()
-    .trim()
-    .min(1, 'Field cannot be empty')
-    .max(20, 'Maximum length: 20 characters'),
+  username: z.string().trim().min(1, 'Field cannot be empty'),
   password: z
     .string()
-    .min(8, 'Minimum length: 8 characters')
+    .min(4, 'Minimum length: 4 characters')
     .max(20, 'Maximum length: 20 characters'),
 });

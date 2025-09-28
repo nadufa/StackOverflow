@@ -4,6 +4,6 @@ export const changeUsernameSchema = z.object({
   newUsername: z
     .string()
     .trim()
-    .min(1, 'Field cannot be empty')
-    .max(20, 'Maximum length: 20 characters'),
+    .min(5, 'Username must be longer than 5 characters')
+    .max(50, 'Maximum length: 50 characters'),
 });

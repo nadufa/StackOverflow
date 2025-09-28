@@ -10,16 +10,29 @@ export const ChangePasswordForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
+    clearErrors,
   } = useForm<ChangePasswordFormType>({
     defaultValues: { oldPassword: '', newPassword: '', confirmNewPassword: '' },
     resolver: zodResolver(changePasswordSchema),
     mode: 'onSubmit',
   });
 
-  const { mutate, isPending } = useChangePassword({ reset });
+  const { mutate, isPending } = useChangePassword({
+    reset,
+    onError: (errorMessage: string) => {
+      setError('root', { message: errorMessage });
+    },
+  });
 
   const submit = (data: ChangePasswordFormType) => {
     mutate({ oldPassword: data.oldPassword, newPassword: data.newPassword });
+  };
+
+  const handleInputChange = () => {
+    if (errors.root) {
+      clearErrors('root');
+    }
   };
 
   return (
@@ -30,7 +43,16 @@ export const ChangePasswordForm = () => {
           <Controller
             name='oldPassword'
             control={control}
-            render={({ field }) => <Input.Password placeholder='Old password' {...field} />}
+            render={({ field }) => (
+              <Input.Password
+                placeholder='Old password'
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange();
+                }}
+              />
+            )}
           />
           {errors.oldPassword && (
             <span className='absolute text-red-500 top-full text-xs'>
@@ -43,7 +65,16 @@ export const ChangePasswordForm = () => {
           <Controller
             name='newPassword'
             control={control}
-            render={({ field }) => <Input.Password placeholder='New password' {...field} />}
+            render={({ field }) => (
+              <Input.Password
+                placeholder='New password'
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange();
+                }}
+              />
+            )}
           />
           {errors.newPassword && (
             <span className='absolute text-red-500 top-full text-xs'>
@@ -56,7 +87,16 @@ export const ChangePasswordForm = () => {
           <Controller
             name='confirmNewPassword'
             control={control}
-            render={({ field }) => <Input.Password placeholder='Confirm new password' {...field} />}
+            render={({ field }) => (
+              <Input.Password
+                placeholder='Confirm new password'
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange();
+                }}
+              />
+            )}
           />
           {errors.confirmNewPassword && (
             <span className='absolute text-red-500 top-full text-xs'>
@@ -64,6 +104,8 @@ export const ChangePasswordForm = () => {
             </span>
           )}
         </div>
+
+        {errors.root && <span className='text-red-500 text-xs'>{errors.root.message}</span>}
 
         <Button
           type='primary'

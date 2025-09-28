@@ -15,8 +15,8 @@ export const Account = () => {
 
   return (
     <div className='flex flex-col items-center gap-5 w-fit h-full'>
-      <h1 className='text-2xl font-bold text-gray-800 !m-0'>
-        Welcome, <span>{data?.username}</span>!
+      <h1 className='text-2xl font-bold text-gray-800 !m-0 max-w-5xl'>
+        Welcome, <span className='truncate'>{data?.username}</span>!
       </h1>
 
       <ProfileInfoCard

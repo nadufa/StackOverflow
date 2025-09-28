@@ -1,5 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 import { ApiClient } from '../../../../../app/api';
+import { useNotification } from '../../../../../app/providers';
 import type { IUserPasswordRequest, IUserPasswordResponse } from '../model';
 
 export const changePassword = (data: {
@@ -12,9 +14,29 @@ export const changePassword = (data: {
   });
 };
 
-export const useChangePassword = ({ reset }: { reset: () => void }) => {
+export const useChangePassword = ({
+  reset,
+  onError,
+}: {
+  reset: () => void;
+  onError?: (errorMessage: string) => void;
+}) => {
+  const { success } = useNotification();
+
   return useMutation({
     mutationFn: changePassword,
-    onSuccess: reset,
+    onSuccess: () => {
+      reset();
+      success('Password changed successfully!');
+    },
+    onError: (err: AxiosError<any>) => {
+      const errorMessage =
+        err.response?.data?.errors?.[0]?.failures?.[0] ||
+        err.response?.data?.message ||
+        'Failed to change password';
+      if (onError) {
+        onError(errorMessage);
+      }
+    },
   });
 };
